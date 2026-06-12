@@ -1,0 +1,821 @@
+{
+  "purchases": [
+    {
+      "Supplier": "DHARWAL FOOD",
+      "Date": "2026-05-11",
+      "Voucher": "GP8",
+      "Invoice": "B0010017",
+      "Net_Amount": 322850,
+      "Type": "Out of State",
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)"
+    },
+    {
+      "Supplier": "VIJAY NAGAR BIO",
+      "Date": "2026-05-06",
+      "Voucher": "GP7",
+      "Invoice": "VBL/GST",
+      "Net_Amount": 210000,
+      "Type": "Within State",
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)"
+    },
+    {
+      "Supplier": "KAMDHENU FEED",
+      "Date": "2026-05-13",
+      "Voucher": "GP9",
+      "Invoice": "746",
+      "Net_Amount": 73900,
+      "Type": "Within State",
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)"
+    },
+    {
+      "Supplier": "PST TRADERS",
+      "Date": "2026-05-30",
+      "Voucher": "GP10",
+      "Invoice": "32",
+      "Net_Amount": 707130,
+      "Type": "Within State",
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)"
+    },
+    {
+      "Supplier": "SRI AISHWARYA FEED",
+      "Date": "2026-05-31",
+      "Voucher": "GP11",
+      "Invoice": "BOS-26-",
+      "Net_Amount": 368165,
+      "Type": "Within State",
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)"
+    }
+  ],
+  "sales": [
+    {
+      "Customer": "Ramkrishna raju",
+      "Date": "2026-05-01",
+      "Voucher": "GS320",
+      "Net_Amount": 2900,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Mahalakshmi kirana, munganda",
+      "Date": "2026-05-01",
+      "Voucher": "GS321",
+      "Net_Amount": 3970,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "VENKANNABABU KIRANA, MUNGANDA",
+      "Date": "2026-05-01",
+      "Voucher": "GS322",
+      "Net_Amount": 1925,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Mahalakshmi kirana, munganda",
+      "Date": "2026-05-04",
+      "Voucher": "GS327",
+      "Net_Amount": 1225,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "KATTA GOPALKRISHNA",
+      "Date": "2026-05-04",
+      "Voucher": "GS328",
+      "Net_Amount": 5430,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "JALLURI SURI BABU",
+      "Date": "2026-05-04",
+      "Voucher": "GS329",
+      "Net_Amount": 3505,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Konndala rao mill, gannavaram",
+      "Date": "2026-05-05",
+      "Voucher": "GS333",
+      "Net_Amount": 52400,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "AKKULA RAMBABU",
+      "Date": "2026-05-05",
+      "Voucher": "GS334",
+      "Net_Amount": 11480,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Satya rice, mukkamala",
+      "Date": "2026-05-05",
+      "Voucher": "GS335",
+      "Net_Amount": 4720,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "APPANA PANISH",
+      "Date": "2026-05-05",
+      "Voucher": "GS336",
+      "Net_Amount": 2670,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "S kalayana sarma",
+      "Date": "2026-05-06",
+      "Voucher": "GS339",
+      "Net_Amount": 1200,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Naryanarao, Gannavaram",
+      "Date": "2026-05-06",
+      "Voucher": "GS340",
+      "Net_Amount": 28700,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "SHIVANJANEYA RICE TRADERS",
+      "Date": "2026-05-06",
+      "Voucher": "GS341",
+      "Net_Amount": 12250,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "SAI RAGVENDHRA",
+      "Date": "2026-05-06",
+      "Voucher": "GS342",
+      "Net_Amount": 1175,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Lakshmi kirana, sakuru",
+      "Date": "2026-05-06",
+      "Voucher": "GS343",
+      "Net_Amount": 1450,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "SRI VENKESWARA KIRANA, SAKURU",
+      "Date": "2026-05-06",
+      "Voucher": "GS344",
+      "Net_Amount": 1180,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Chituru krishna murthy, tondavaram",
+      "Date": "2026-05-06",
+      "Voucher": "GS345",
+      "Net_Amount": 7015,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "GELLI RAJU, TONDAVARAM",
+      "Date": "2026-05-06",
+      "Voucher": "GS346",
+      "Net_Amount": 1875,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Doorababu m, puletkuru",
+      "Date": "2026-05-07",
+      "Voucher": "GS349",
+      "Net_Amount": 1855,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Sri vijaya krishna ganesh kirana",
+      "Date": "2026-05-07",
+      "Voucher": "GS350",
+      "Net_Amount": 11292,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "AKKULA RAMBABU",
+      "Date": "2026-05-07",
+      "Voucher": "GS351",
+      "Net_Amount": 6025,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "G MURALI KRISHNA, KOTLA",
+      "Date": "2026-05-08",
+      "Voucher": "GS354",
+      "Net_Amount": 1600,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "YEGGIRAJU, MACHAVARAM",
+      "Date": "2026-05-08",
+      "Voucher": "GS355",
+      "Net_Amount": 2440,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "APPANA PANISH",
+      "Date": "2026-05-08",
+      "Voucher": "GS356",
+      "Net_Amount": 1430,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Konndala rao mill, gannavaram",
+      "Date": "2026-05-09",
+      "Voucher": "GS358",
+      "Net_Amount": 24200,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Konndala rao mill, gannavaram",
+      "Date": "2026-05-09",
+      "Voucher": "GS359",
+      "Net_Amount": 23040,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Konndala rao mill, gannavaram",
+      "Date": "2026-05-10",
+      "Voucher": "GS394",
+      "Net_Amount": 3960,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Appana suresh, Munganda",
+      "Date": "2026-05-12",
+      "Voucher": "GS363",
+      "Net_Amount": 7010,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Achuta kirana",
+      "Date": "2026-05-12",
+      "Voucher": "GS364",
+      "Net_Amount": 1660,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Appana suresh",
+      "Date": "2026-05-12",
+      "Voucher": "GS365",
+      "Net_Amount": 1320,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "JALLURI SURI BABU",
+      "Date": "2026-05-12",
+      "Voucher": "GS366",
+      "Net_Amount": 7996,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "SATYA MAIN KANTHA, GANNAVARAM",
+      "Date": "2026-05-12",
+      "Voucher": "GS367",
+      "Net_Amount": 11272,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "SRI VENKESWARA KIRANA, SAKURU",
+      "Date": "2026-05-12",
+      "Voucher": "GS368",
+      "Net_Amount": 2350,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Lakshmi kirana, sakuru",
+      "Date": "2026-05-12",
+      "Voucher": "GS369",
+      "Net_Amount": 2575,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "SAI RAGVENDHRA",
+      "Date": "2026-05-13",
+      "Voucher": "GS371",
+      "Net_Amount": 410,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "G venanana",
+      "Date": "2026-05-14",
+      "Voucher": "GS373",
+      "Net_Amount": 3775,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "G MURALI KRISHNA",
+      "Date": "2026-05-14",
+      "Voucher": "GS374",
+      "Net_Amount": 2680,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Sri vijaya krishna ganesh kirana",
+      "Date": "2026-05-14",
+      "Voucher": "GS375",
+      "Net_Amount": 1655,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "AKKULA RAMBABU",
+      "Date": "2026-05-14",
+      "Voucher": "GS376",
+      "Net_Amount": 6620,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "SRI LAKSHMI SRINIVASA PULETIKURU",
+      "Date": "2026-05-14",
+      "Voucher": "GS377",
+      "Net_Amount": 2848,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Vechha satayanaraya murthy, pulletikuru",
+      "Date": "2026-05-14",
+      "Voucher": "GS378",
+      "Net_Amount": 47234,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Boddu pandu ranga rao, munganda",
+      "Date": "2026-05-14",
+      "Voucher": "GS379",
+      "Net_Amount": 4690,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Gokavarapu v subharmanayam, pullitkuru",
+      "Date": "2026-05-16",
+      "Voucher": "GS386",
+      "Net_Amount": 13700,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Chituru krishna murthy, tondavaram",
+      "Date": "2026-05-16",
+      "Voucher": "GS387",
+      "Net_Amount": 2700,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Mahalakshmi kirana, munganda",
+      "Date": "2026-05-16",
+      "Voucher": "GS388",
+      "Net_Amount": 675,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Ramkrishna raju",
+      "Date": "2026-05-16",
+      "Voucher": "GS389",
+      "Net_Amount": 2760,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Mahalakshmi kirana, munganda",
+      "Date": "2026-05-16",
+      "Voucher": "GS391",
+      "Net_Amount": 1225,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "B NANAJI, AMBAJIPETA",
+      "Date": "2026-05-17",
+      "Voucher": "GS393",
+      "Net_Amount": 1650,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Gokavarapu v subharmanayam, pullitkuru",
+      "Date": "2026-05-18",
+      "Voucher": "GS395",
+      "Net_Amount": 18505,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "LAKSHMI SAI RICE & GENERAL STORES",
+      "Date": "2026-05-19",
+      "Voucher": "GS396",
+      "Net_Amount": 10332,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Mahalakshmi kirana, munganda",
+      "Date": "2026-05-19",
+      "Voucher": "GS397",
+      "Net_Amount": 915,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Siva sai rice traders, katerunukona",
+      "Date": "2026-05-19",
+      "Voucher": "GS398",
+      "Net_Amount": 14170,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "SRI VENKATA KALAYANI GADDENA PALLI KOTLA",
+      "Date": "2026-05-19",
+      "Voucher": "GS399",
+      "Net_Amount": 20620,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "YEGGIRAJU, MACHAVARAM",
+      "Date": "2026-05-19",
+      "Voucher": "GS400",
+      "Net_Amount": 6870,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Gamini srinivasarao",
+      "Date": "2026-05-19",
+      "Voucher": "GS401",
+      "Net_Amount": 14465,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "JAMMI RICE SHOP, AMBAJIPETA",
+      "Date": "2026-05-19",
+      "Voucher": "GS403",
+      "Net_Amount": 6500,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "VECHA SATYANARYANA, RAVULAPLAM",
+      "Date": "2026-05-21",
+      "Voucher": "GS405",
+      "Net_Amount": 74166,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Ramkrishna raju",
+      "Date": "2026-05-21",
+      "Voucher": "GS420",
+      "Net_Amount": 2760,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "SAI RAGVENDHRA",
+      "Date": "2026-05-23",
+      "Voucher": "GS406",
+      "Net_Amount": 580,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "JALLURI SURI BABU",
+      "Date": "2026-05-24",
+      "Voucher": "GS409",
+      "Net_Amount": 5875,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Mahalakshmi kirana, munganda",
+      "Date": "2026-05-24",
+      "Voucher": "GS410",
+      "Net_Amount": 1425,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "SAI, KOTAPETA",
+      "Date": "2026-05-25",
+      "Voucher": "GS407",
+      "Net_Amount": 6520,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Konndala rao mill gannavaram",
+      "Date": "2026-05-25",
+      "Voucher": "GS411",
+      "Net_Amount": 11800,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "SATYA MAIN KANTHA, GANNAVARAM",
+      "Date": "2026-05-25",
+      "Voucher": "GS412",
+      "Net_Amount": 11440,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Ramkrishna raju",
+      "Date": "2026-05-25",
+      "Voucher": "GS421",
+      "Net_Amount": 2380,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Lakkiam setti baskar rao, pullet kuru",
+      "Date": "2026-05-26",
+      "Voucher": "GS413",
+      "Net_Amount": 5950,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Gokavarapu v subharmanayam, pullitkuru",
+      "Date": "2026-05-26",
+      "Voucher": "GS414",
+      "Net_Amount": 8500,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Ramkrishna raju",
+      "Date": "2026-05-26",
+      "Voucher": "GS422",
+      "Net_Amount": 2000,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "SAI RAGVENDHRA",
+      "Date": "2026-05-27",
+      "Voucher": "GS415",
+      "Net_Amount": 980,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "GELLI RAJU, TONDAVARAM",
+      "Date": "2026-05-27",
+      "Voucher": "GS416",
+      "Net_Amount": 1875,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Chituru krishna murthy, tondavaram",
+      "Date": "2026-05-27",
+      "Voucher": "GS417",
+      "Net_Amount": 5065,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "SRI VENKESWARA KIRANA, SAKURU",
+      "Date": "2026-05-27",
+      "Voucher": "GS418",
+      "Net_Amount": 1475,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Ramkrishna raju",
+      "Date": "2026-05-28",
+      "Voucher": "GS423",
+      "Net_Amount": 2760,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "VENKANNABABU KIRANA, MUNGANDA",
+      "Date": "2026-05-28",
+      "Voucher": "GS424",
+      "Net_Amount": 330,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "SURYA MANIKANTA GENERAL STORES",
+      "Date": "2026-05-28",
+      "Voucher": "GS425",
+      "Net_Amount": 570,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Ramkrishna raju",
+      "Date": "2026-05-29",
+      "Voucher": "GS428",
+      "Net_Amount": 2000,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "BODDU GANESH, MUNGANDA",
+      "Date": "2026-05-29",
+      "Voucher": "GS429",
+      "Net_Amount": 1125,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Sri vijaya krishna ganesh kirana",
+      "Date": "2026-05-29",
+      "Voucher": "GS430",
+      "Net_Amount": 3595,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Jalis kirana",
+      "Date": "2026-05-29",
+      "Voucher": "GS431",
+      "Net_Amount": 1660,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Lakshmi general stores, nadampudi",
+      "Date": "2026-05-29",
+      "Voucher": "GS432",
+      "Net_Amount": 3100,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "KOTLA YEGGIRAJU, MACHAVARAM",
+      "Date": "2026-05-30",
+      "Voucher": "GS436",
+      "Net_Amount": 2830,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Mahalakshmi kirana, munganda",
+      "Date": "2026-05-30",
+      "Voucher": "GS437",
+      "Net_Amount": 1375,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "Achuta kirana",
+      "Date": "2026-05-30",
+      "Voucher": "GS438",
+      "Net_Amount": 1360,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "JALLURI SURI BABU",
+      "Date": "2026-05-30",
+      "Voucher": "GS439",
+      "Net_Amount": 16216,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Retailer/Wholesaler"
+    },
+    {
+      "Customer": "COUNTER SALES",
+      "Date": "2026-05-01",
+      "Voucher": "COMBINED_COUNTER",
+      "Net_Amount": 858762,
+      "Month": "May 2026",
+      "Season": "Summer (Low Demand)",
+      "Customer_Type": "Counter/Walk-in"
+    }
+  ]
+}

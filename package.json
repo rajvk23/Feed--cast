@@ -1,0 +1,14 @@
+{
+  "name": "satya-venkateswara-traders-app",
+  "version": "1.0.0",
+  "description": "Cattle feed wholesale inventory and demand prediction app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "author": "Antigravity",
+  "license": "ISC"
+}

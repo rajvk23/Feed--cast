@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Satya Venkateswara Traders - Cattle Feed Dashboard</title>
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <!-- Header Bar -->
+  <header class="app-header">
+    <div class="header-content">
+      <div class="header-logo">
+        <svg class="icon-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 22H22L12 2Z" fill="url(#logoGrad)"/>
+          <path d="M12 6L5 20H19L12 6Z" fill="#ffffff" fill-opacity="0.2"/>
+          <circle cx="12" cy="14" r="3" fill="#ffc107"/>
+          <defs>
+            <linearGradient id="logoGrad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#0c5132"/>
+              <stop offset="1" stop-color="#198754"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="header-titles">
+          <h1>Satya Venkateswara Traders</h1>
+          <p class="header-subtitle">Ambajipet, Andhra Pradesh | Cattle Feed Wholesale</p>
+        </div>
+      </div>
+      <div class="header-time" id="currentTime">
+        <span>June 2026</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Bottom Navigation Bar for Mobile, Sidebar/Tabs for Desktop -->
+  <main class="app-container">
+    <nav class="app-nav">
+      <button class="nav-tab active" data-tab="dashboard">
+        <svg viewBox="0 0 24 24" class="tab-icon"><path d="M3 13h1v7c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-7h1a1 1 0 0 0 .707-1.707l-9-9a.999.999 0 0 0-1.414 0l-9 9A1 1 0 0 0 3 13zm7 7v-5h4v5h-4zm2-15.586l6 6V20h-2v-5a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v5H6v-9.586l6-6z"/></svg>
+        <span>Dashboard</span>
+      </button>
+      <button class="nav-tab" data-tab="retailers">
+        <svg viewBox="0 0 24 24" class="tab-icon"><path d="M19 17.039C19 14.542 16.2 13 12 13c-4.2 0-7 1.542-7 4.039v1.961h14v-1.961zm-7-6.039c2.206 0 4-1.794 4-4s-1.794-4-4-4-4 1.794-4 4 1.794 4 4 4z"/></svg>
+        <span>Customers</span>
+      </button>
+      <button class="nav-tab" data-tab="prediction">
+        <svg viewBox="0 0 24 24" class="tab-icon"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"/></svg>
+        <span>AI Prediction</span>
+      </button>
+      <button class="nav-tab btn-accent" data-tab="add-sale">
+        <svg viewBox="0 0 24 24" class="tab-icon"><path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"/></svg>
+        <span>Record Sale</span>
+      </button>
+      <button class="nav-tab btn-accent" data-tab="add-purchase" style="background-color: var(--accent-light); color: var(--accent-hover);">
+        <svg viewBox="0 0 24 24" class="tab-icon"><path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"/></svg>
+        <span>Record Buy</span>
+      </button>
+    </nav>
+
+    <!-- Tab Contents -->
+    <section class="tab-content active" id="dashboard">
+      <div class="section-header">
+        <h2>Business Overview</h2>
+        <div class="month-selector">
+          <label for="dashboardMonth">Select Month:</label>
+          <select id="dashboardMonth">
+            <option value="May 2026">May 2026 (Baseline)</option>
+            <option value="June 2026" selected>June 2026 (Current)</option>
+            <option value="All Time">All Time Summary</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Overview Cards -->
+      <div class="metrics-grid">
+        <div class="metric-card purchase-card">
+          <div class="card-icon-wrapper">
+            <svg viewBox="0 0 24 24" class="card-icon"><path d="M19 2H5c-1.103 0-2 .897-2 2v16c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2zM5 20V4h14l.002 16H5z"/><path d="M7 12h10v2H7zm0-4h10v2H7zm0 8h7v2H7z"/></svg>
+          </div>
+          <div class="card-info">
+            <span class="card-label">Total Purchases (Stock In)</span>
+            <span class="card-value" id="totalPurchases">₹0</span>
+            <span class="card-meta" id="purchaseMeta">5 Invoices from suppliers</span>
+          </div>
+        </div>
+
+        <div class="metric-card sales-card">
+          <div class="card-icon-wrapper">
+            <svg viewBox="0 0 24 24" class="card-icon"><path d="M21 4H3a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1zm-1 14H4V6h16v12z"/><path d="M8 10h3v8H8zm5 3h3v5h-3z"/></svg>
+          </div>
+          <div class="card-info">
+            <span class="card-label">Total Sales (Stock Out)</span>
+            <span class="card-value" id="totalSales">₹0</span>
+            <span class="card-meta" id="salesMeta">85 Bills to retailers</span>
+          </div>
+        </div>
+
+        <div class="metric-card profit-card">
+          <div class="card-icon-wrapper">
+            <svg viewBox="0 0 24 24" class="card-icon"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/><path d="M11 11h2v5h-2zm0-4h2v2h-2z"/></svg>
+          </div>
+          <div class="card-info">
+            <span class="card-label">Active Cash Margin</span>
+            <span class="card-value" id="netProfit">₹0</span>
+            <span class="card-meta" id="profitMeta">Net cash flow difference</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Analysis Charts/Bars -->
+      <div class="dashboard-details">
+        <div class="card flex-1">
+          <div class="card-header-simple">
+            <h3>Monthly Cash Flow Balance</h3>
+          </div>
+          <div class="balance-bar-container">
+            <div class="balance-labels">
+              <span>Purchases (Stock Bought)</span>
+              <span>Sales (Stock Sold)</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-bar-purchase" id="pBarWidth"></div>
+              <div class="progress-bar-sales" id="sBarWidth"></div>
+            </div>
+            <div class="balance-percentage" id="balanceText">Sales cover 87.9% of Purchases</div>
+          </div>
+        </div>
+
+        <div class="card flex-1">
+          <div class="card-header-simple">
+            <h3>Activity Summary</h3>
+          </div>
+          <div class="summary-list">
+            <div class="summary-item">
+              <span class="summary-item-label">Counter Sales Total</span>
+              <span class="summary-item-value" id="summaryCounterSales">₹0</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-item-label">Retailer Ledger Sales</span>
+              <span class="summary-item-value" id="summaryRetailerSales">₹0</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-item-label">Current Active Season</span>
+              <span class="summary-item-value badge" id="summarySeason">Summer (Low)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Transactions Table -->
+      <div class="card mt-4">
+        <div class="card-header-simple">
+          <h3>Recent Sales Activity</h3>
+          <button class="btn btn-sm btn-outline nav-trigger" data-tab="add-sale">New Sale</button>
+        </div>
+        <div class="table-responsive">
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Voucher</th>
+                <th>Customer</th>
+                <th>Type</th>
+                <th class="text-right">Amount (₹)</th>
+              </tr>
+            </thead>
+            <tbody id="recentSalesBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Retailer History Tab -->
+    <section class="tab-content" id="retailers">
+      <div class="section-header">
+        <h2>Customer Purchase History</h2>
+        <div class="search-box">
+          <input type="text" id="retailerSearch" placeholder="Search by customer name or location...">
+          <svg class="search-icon" viewBox="0 0 24 24"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"/></svg>
+        </div>
+      </div>
+
+      <!-- Retailer Stats Cards -->
+      <div class="metrics-grid mb-4">
+        <div class="metric-card card-accent-gold">
+          <div class="card-info">
+            <span class="card-label">Total Active Customers</span>
+            <span class="card-value" id="totalRetailerCount">0</span>
+            <span class="card-meta">Including counter sales</span>
+          </div>
+        </div>
+        <div class="metric-card card-accent-gold">
+          <div class="card-info">
+            <span class="card-label">Top Customer / Channel</span>
+            <span class="card-value-small" id="topCustomerName">-</span>
+            <span class="card-meta" id="topCustomerAmount">₹0 bought this month</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Retailer Sub-navigation -->
+      <div class="sub-nav-tabs mb-4">
+        <button class="sub-nav-tab active" id="btnLedgerSummary">Ledger Summary</button>
+        <button class="sub-nav-tab" id="btnPurchaseForecast">Next Purchase Forecast (AI)</button>
+      </div>
+
+      <!-- Ledger Summary Card -->
+      <div class="card" id="ledgerCard">
+        <div class="table-responsive">
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Customer Name</th>
+                <th class="text-center">Total Visits / Bills</th>
+                <th class="text-right">Total Bought (₹)</th>
+                <th class="text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="retailersBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Next Purchase Forecast Card -->
+      <div class="card" id="forecastCard" style="display: none;">
+        <div class="table-responsive">
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>Customer Name</th>
+                <th class="text-center">Avg. Order Cycle</th>
+                <th class="text-center">Last Purchase Date</th>
+                <th class="text-center">Predicted Next Purchase</th>
+                <th class="text-right">Predicted Exact Amount (₹)</th>
+                <th class="text-center">Due Status</th>
+                <th class="text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="forecastBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Prediction Tab -->
+    <section class="tab-content" id="prediction">
+      <div class="section-header">
+        <h2>AI Demand &amp; Stock Order Predictor</h2>
+      </div>
+
+      <div class="info-alert mb-4">
+        <div class="alert-icon">💡</div>
+        <div class="alert-text">
+          <strong>How it works:</strong> We use the owner's sales data from **May 2026** (Summer / lowest demand) as the baseline. Since we are now in **June 2026 (Kharif Season)**, demand naturally goes up because cattle are used more for farming. The AI automatically increases baseline numbers and calculates what to order.
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <!-- AI Prediction Engine Insights Card -->
+        <div class="card">
+          <h3 class="card-title-border">AI Demand Prediction Engine</h3>
+          <p class="description-text">Cattle feed demand forecasting is fully automated using historical sales baselines and calendar-based agricultural cycles.</p>
+          
+          <div class="engine-features">
+            <div class="engine-feature-item">
+              <div class="feature-bullet">✓</div>
+              <div>
+                <strong>Baseline Month Analysed</strong>
+                <p class="text-sm text-muted">May 2026 (Baseline Sales: ₹14,78,568)</p>
+              </div>
+            </div>
+            <div class="engine-feature-item mt-3">
+              <div class="feature-bullet">✓</div>
+              <div>
+                <strong>Active Season Model</strong>
+                <p class="text-sm text-muted">June 2026 - Kharif Season (+12.5% demand increase applied)</p>
+              </div>
+            </div>
+            <div class="engine-feature-item mt-3">
+              <div class="feature-bullet">✓</div>
+              <div>
+                <strong>Safety Stock Buffer</strong>
+                <p class="text-sm text-muted">Standard 10% safety buffer included in supplier orders</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="formula-box mt-4">
+            <h4>Automated Forecast Formula</h4>
+            <code>June Target = May Sales (₹14,78,568) * 1.125 (Kharif Factor)</code><br>
+            <code>Supplier Order = June Target * 1.10 (Safety Stock)</code>
+          </div>
+        </div>
+
+        <!-- Prediction Results Card -->
+        <div class="card bg-success-light border-success">
+          <h3 class="card-title-border color-success">Recommended Stock Order</h3>
+          
+          <div class="large-result-box">
+            <div class="result-item">
+              <span class="result-label">Predicted Customer Demand (Sales)</span>
+              <span class="result-value" id="predDemand">₹16,63,389</span>
+            </div>
+            <div class="result-divider"></div>
+            <div class="result-item highlight">
+              <span class="result-label">Recommended Supplier Order (Purchases)</span>
+              <span class="result-value-big" id="predOrder">₹18,29,728</span>
+            </div>
+          </div>
+
+          <p class="meta-note mt-3">This recommendation is calculated to cover your expected sales of <strong>₹16.63 Lakhs</strong> plus a <strong>10%</strong> safety stock buffer.</p>
+        </div>
+      </div>
+
+      <!-- Sales Channels Forecast Section -->
+      <div class="card mt-4">
+        <h3 class="card-title-border">Sales Channels Demand Forecast (June 2026)</h3>
+        <p class="description-text mb-3">Breakdown of predicted exact demand and recorded sales progress for June 2026.</p>
+        
+        <div class="channel-forecast-grid">
+          <!-- Counter Sales Forecast Card -->
+          <div class="channel-card">
+            <div class="channel-header">
+              <span class="channel-badge badge-counter">Counter Sales</span>
+              <span class="channel-pace" id="counterPace">Pace: ₹0 / day needed</span>
+            </div>
+            <div class="channel-metrics">
+              <div class="c-metric">
+                <span class="c-label">May Baseline</span>
+                <span class="c-value" id="counterMayBaseline">₹8,58,762</span>
+              </div>
+              <div class="c-metric highlight-green">
+                <span class="c-label">June Exact Prediction</span>
+                <span class="c-value" id="counterJunePred">₹9,66,107</span>
+              </div>
+              <div class="c-metric">
+                <span class="c-label">June Recorded</span>
+                <span class="c-value" id="counterJuneRecorded">₹0</span>
+              </div>
+            </div>
+            <div class="progress-container mt-3">
+              <div class="progress-labels">
+                <span>Progress: <strong id="counterProgressPercent">0%</strong></span>
+                <span id="counterProgressAmt">₹0 of ₹9,66,107</span>
+              </div>
+              <div class="progress-track-channel">
+                <div class="progress-bar-channel bg-counter-bar" id="counterProgressBar" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Retailer Ledger Forecast Card -->
+          <div class="channel-card">
+            <div class="channel-header">
+              <span class="channel-badge badge-retailer-header">Retailer Ledger</span>
+              <span class="channel-pace" id="retailerPace">Pace: ₹0 / day needed</span>
+            </div>
+            <div class="channel-metrics">
+              <div class="c-metric">
+                <span class="c-label">May Baseline</span>
+                <span class="c-value" id="retailerMayBaseline">₹6,19,806</span>
+              </div>
+              <div class="c-metric highlight-green">
+                <span class="c-label">June Exact Prediction</span>
+                <span class="c-value" id="retailerJunePred">₹6,97,282</span>
+              </div>
+              <div class="c-metric">
+                <span class="c-label">June Recorded</span>
+                <span class="c-value" id="retailerJuneRecorded">₹0</span>
+              </div>
+            </div>
+            <div class="progress-container mt-3">
+              <div class="progress-labels">
+                <span>Progress: <strong id="retailerProgressPercent">0%</strong></span>
+                <span id="retailerProgressAmt">₹0 of ₹6,97,282</span>
+              </div>
+              <div class="progress-track-channel">
+                <div class="progress-bar-channel bg-retailer-bar" id="retailerProgressBar" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Proportional Supplier Recommendation -->
+      <div class="card mt-4">
+        <h3 class="card-title-border">Where to Order From (Supplier Allocation)</h3>
+        <p class="description-text mb-3">To make it easy, here is how much cattle feed you should order from each of your suppliers. This is split based on your buying pattern in May 2026.</p>
+        <div class="table-responsive">
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>Supplier Name</th>
+                <th>Type</th>
+                <th class="text-center">May Purchase Ratio</th>
+                <th class="text-right">May Order Value (₹)</th>
+                <th class="text-right highlight-col">Recommended Order for June (₹)</th>
+              </tr>
+            </thead>
+            <tbody id="supplierRecBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Record Sale Tab -->
+    <section class="tab-content" id="add-sale">
+      <div class="section-header">
+        <h2>Record Daily Sale</h2>
+      </div>
+
+      <div class="card max-w-600 mx-auto">
+        <h3 class="card-title-border">Enter Today's Sale</h3>
+        <p class="description-text">Type in details of cattle feed sold today. This will update the Dashboard, Retailer History, and AI predictions immediately.</p>
+        
+        <form id="saleForm" class="styled-form">
+          <!-- Sale Type Selection -->
+          <div class="form-group">
+            <label class="form-label">Who is the Buyer?</label>
+            <div class="radio-toggle-group">
+              <input type="radio" id="typeCounter" name="saleType" value="counter" checked>
+              <label for="typeCounter" class="radio-label">Counter Sale (Walk-in Customer)</label>
+              
+              <input type="radio" id="typeRetailer" name="saleType" value="retailer">
+              <label for="typeRetailer" class="radio-label">Regular Retailer Ledger</label>
+            </div>
+          </div>
+
+          <!-- Customer Name Input -->
+          <div class="form-group" id="customerInputGroup" style="display: none;">
+            <label for="customerName" class="form-label">Retailer Name</label>
+            <input type="text" id="customerName" placeholder="Type retailer name..." list="retailerList" class="form-input">
+            <datalist id="retailerList">
+              <!-- Dynamically populated with unique retailers -->
+            </datalist>
+            <span class="input-tip">Type name to search existing retailers or write a new name to add them.</span>
+          </div>
+
+          <!-- Sale Amount -->
+          <div class="form-group">
+            <label for="saleAmount" class="form-label">Sale Amount (₹)</label>
+            <div class="input-rupee-wrapper">
+              <span class="input-prefix">₹</span>
+              <input type="number" id="saleAmount" placeholder="Enter amount in Rupees (e.g. 5000)" required min="1" class="form-input text-lg">
+            </div>
+          </div>
+
+          <!-- Sale Date -->
+          <div class="form-group">
+            <label for="saleDate" class="form-label">Date of Sale</label>
+            <input type="date" id="saleDate" required class="form-input">
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-actions mt-4">
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="btnSubmitSale">
+              Save Daily Sale
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Record Purchase Tab -->
+    <section class="tab-content" id="add-purchase">
+      <div class="section-header">
+        <h2>Record Supplier Purchase</h2>
+      </div>
+
+      <div class="card max-w-600 mx-auto">
+        <h3 class="card-title-border">Enter Purchase Invoice</h3>
+        <p class="description-text">Type in details of cattle feed stock bought from suppliers. This will update the Dashboard purchases total immediately.</p>
+        
+        <form id="purchaseForm" class="styled-form">
+          <!-- Supplier Name Input -->
+          <div class="form-group">
+            <label for="purchaseSupplier" class="form-label">Supplier Name</label>
+            <input type="text" id="purchaseSupplier" placeholder="Type supplier name (e.g. PST TRADERS)..." list="supplierList" required class="form-input">
+            <datalist id="supplierList">
+              <!-- Dynamically populated with unique suppliers -->
+            </datalist>
+          </div>
+
+          <!-- Invoice Number -->
+          <div class="form-group">
+            <label for="purchaseInvoice" class="form-label">Invoice / Bill Number</label>
+            <input type="text" id="purchaseInvoice" placeholder="Enter Invoice Number (e.g. BOS-26-001)" required class="form-input">
+          </div>
+
+          <!-- Purchase Type (Within State vs Out of State) -->
+          <div class="form-group">
+            <label class="form-label">Purchase Type</label>
+            <div class="radio-toggle-group">
+              <input type="radio" id="typeWithinState" name="purchaseType" value="Within State" checked>
+              <label for="typeWithinState" class="radio-label">Within State (GST)</label>
+              
+              <input type="radio" id="typeOutOfState" name="purchaseType" value="Out of State">
+              <label for="typeOutOfState" class="radio-label">Out of State (IGST)</label>
+            </div>
+          </div>
+
+          <!-- Purchase Amount -->
+          <div class="form-group">
+            <label for="purchaseAmount" class="form-label">Purchase Amount (₹)</label>
+            <div class="input-rupee-wrapper">
+              <span class="input-prefix">₹</span>
+              <input type="number" id="purchaseAmount" placeholder="Enter invoice amount in Rupees" required min="1" class="form-input text-lg">
+            </div>
+          </div>
+
+          <!-- Purchase Date -->
+          <div class="form-group">
+            <label for="purchaseDate" class="form-label">Date of Purchase</label>
+            <input type="date" id="purchaseDate" required class="form-input">
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-actions mt-4">
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="btnSubmitPurchase">
+              Save Supplier Purchase
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Notification Banner (Toast) -->
+  <div class="toast-notification" id="toast">
+    <div class="toast-content">
+      <span class="toast-icon">✓</span>
+      <span class="toast-message" id="toastMessage">Sale recorded successfully!</span>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
