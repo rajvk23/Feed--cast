@@ -4,6 +4,14 @@ let purchases = [];
 let activeTab = 'dashboard';
 let predictionViewMode = 'rupees';
 
+// Inventory Database
+let inventory = [
+  { name: 'Super Cow Feed (Premium)', category: 'Cattle Feed', stock: 450, minStock: 100, price: 1150 },
+  { name: 'Gold Buffalo Mash', category: 'Buffalo Special', stock: 85, minStock: 120, price: 1100 },
+  { name: 'Premium Calf Starter', category: 'Calf Feed', stock: 210, minStock: 50, price: 1300 },
+  { name: 'SVT Mineral Mixture', category: 'Supplements', stock: 15, minStock: 30, price: 950 }
+];
+
 // Currency Formatter (Indian style: ₹14,78,568)
 const rupeeFormatter = new Intl.NumberFormat('en-IN', {
   style: 'currency',
@@ -349,6 +357,27 @@ function renderDashboard() {
       `;
       recentSalesBody.appendChild(row);
     }
+  }
+
+  // Populate Product Inventory Table
+  const inventoryBody = document.getElementById('inventoryBody');
+  if (inventoryBody) {
+    inventoryBody.innerHTML = '';
+    inventory.forEach(item => {
+      const isLow = item.stock < item.minStock;
+      const statusText = isLow ? 'Low Stock' : 'In Stock';
+      const statusClass = isLow ? 'badge-overdue' : 'badge-active';
+      
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><strong>${item.name}</strong></td>
+        <td><span class="badge-type badge-retailer">${item.category}</span></td>
+        <td class="text-center"><strong>${item.stock} Bags</strong></td>
+        <td class="text-center"><span class="badge-status ${statusClass}">${statusText}</span></td>
+        <td class="text-right"><strong>${formatRupee(item.stock * item.price)}</strong></td>
+      `;
+      inventoryBody.appendChild(row);
+    });
   }
 }
 

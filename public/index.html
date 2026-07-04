@@ -175,6 +175,30 @@
           </table>
         </div>
       </div>
+
+      <!-- Product Inventory Stock Panel -->
+      <div class="card mt-4">
+        <div class="card-header-simple">
+          <h3>Current Product Stock Levels</h3>
+          <span class="badge-status badge-active" style="padding: 0.25rem 0.75rem; border-radius: var(--radius-sm);">Active Tracking</span>
+        </div>
+        <div class="table-responsive">
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th class="text-center">Current Stock</th>
+                <th class="text-center">Status</th>
+                <th class="text-right">Estimated Value (₹)</th>
+              </tr>
+            </thead>
+            <tbody id="inventoryBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
     </section>
 
     <!-- Retailer History Tab -->
