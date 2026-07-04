@@ -1214,3 +1214,30 @@ tr:nth-child(3) .rank-badge {
   color: var(--text-muted) !important;
 }
 
+/* View Toggle Group for predictions */
+.view-toggle-group {
+  display: inline-flex;
+  background-color: var(--primary-light);
+  border: 1px solid var(--primary-border);
+  padding: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.toggle-btn {
+  background: transparent;
+  border: none;
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  cursor: pointer;
+  border-radius: calc(var(--radius-sm) - 2px);
+  transition: var(--transition);
+}
+
+.toggle-btn.active {
+  background-color: var(--primary-color);
+  color: var(--text-white);
+  box-shadow: var(--shadow-sm);
+}
+
