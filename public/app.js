@@ -2,7 +2,6 @@
 let sales = [];
 let purchases = [];
 let activeTab = 'dashboard';
-let predictionViewMode = 'rupees';
 
 // Inventory Database
 let inventory = [
@@ -107,24 +106,6 @@ function setupEventListeners() {
     ledgerCard.style.display = 'none';
     forecastCard.style.display = 'block';
     renderCustomerPredictions();
-  });
-
-  // View toggle for predictions
-  const toggleRupees = document.getElementById('toggleRupees');
-  const toggleBags = document.getElementById('toggleBags');
-
-  toggleRupees.addEventListener('click', () => {
-    predictionViewMode = 'rupees';
-    toggleRupees.classList.add('active');
-    toggleBags.classList.remove('active');
-    calculatePrediction();
-  });
-
-  toggleBags.addEventListener('click', () => {
-    predictionViewMode = 'bags';
-    toggleBags.classList.add('active');
-    toggleRupees.classList.remove('active');
-    calculatePrediction();
   });
 
   // Form Radio toggles
@@ -464,15 +445,6 @@ window.triggerRetailerSale = function(retailerName) {
   switchTab('add-sale');
 };
 
-// Format values as either Rupees or Bags (estimated at ₹1,100 per bag)
-function formatPredictionValue(amount) {
-  if (predictionViewMode === 'bags') {
-    const bags = Math.round(amount / 1100);
-    return `${bags.toLocaleString('en-IN')} Bags`;
-  }
-  return formatRupee(amount);
-}
-
 // Calculate and Render AI Prediction
 function calculatePrediction() {
   const kharifRate = 0.125; // +12.5% automated
@@ -486,8 +458,8 @@ function calculatePrediction() {
   const recommendedJuneOrder = projectedJuneDemand * (1 + bufferRate);
 
   // Update UI values
-  document.getElementById('predDemand').innerText = formatPredictionValue(projectedJuneDemand);
-  document.getElementById('predOrder').innerText = formatPredictionValue(recommendedJuneOrder);
+  document.getElementById('predDemand').innerText = formatRupee(projectedJuneDemand);
+  document.getElementById('predOrder').innerText = formatRupee(recommendedJuneOrder);
   
   // Supplier Allocation Logic
   // May purchases details: Total = 1,682,045
@@ -512,8 +484,8 @@ function calculatePrediction() {
       <td><strong>${sup.name}</strong></td>
       <td><span class="badge-type badge-retailer">${sup.type}</span></td>
       <td class="text-center text-muted">${(ratio * 100).toFixed(1)}%</td>
-      <td class="text-right text-muted">${formatPredictionValue(sup.amount)}</td>
-      <td class="text-right highlight-col"><strong>${formatPredictionValue(recommendedAmount)}</strong></td>
+      <td class="text-right text-muted">${formatRupee(sup.amount)}</td>
+      <td class="text-right highlight-col"><strong>${formatRupee(recommendedAmount)}</strong></td>
     `;
     supplierRecBody.appendChild(row);
   });
@@ -537,24 +509,24 @@ function calculatePrediction() {
     .reduce((sum, s) => sum + s.Net_Amount, 0);
 
   // Update DOM elements for channel baselines and predictions
-  document.getElementById('counterMayBaseline').innerText = formatPredictionValue(mayCounterBaseline);
-  document.getElementById('counterJunePred').innerText = formatPredictionValue(juneCounterPred);
-  document.getElementById('counterJuneRecorded').innerText = formatPredictionValue(juneCounterRecorded);
+  document.getElementById('counterMayBaseline').innerText = formatRupee(mayCounterBaseline);
+  document.getElementById('counterJunePred').innerText = formatRupee(juneCounterPred);
+  document.getElementById('counterJuneRecorded').innerText = formatRupee(juneCounterRecorded);
 
-  document.getElementById('retailerMayBaseline').innerText = formatPredictionValue(mayRetailerBaseline);
-  document.getElementById('retailerJunePred').innerText = formatPredictionValue(juneRetailerPred);
-  document.getElementById('retailerJuneRecorded').innerText = formatPredictionValue(juneRetailerRecorded);
+  document.getElementById('retailerMayBaseline').innerText = formatRupee(mayRetailerBaseline);
+  document.getElementById('retailerJunePred').innerText = formatRupee(juneRetailerPred);
+  document.getElementById('retailerJuneRecorded').innerText = formatRupee(juneRetailerRecorded);
 
   // Progress Bar widths & text
   const counterPct = Math.min(100, Math.round((juneCounterRecorded / juneCounterPred) * 100)) || 0;
   const retailerPct = Math.min(100, Math.round((juneRetailerRecorded / juneRetailerPred) * 100)) || 0;
 
   document.getElementById('counterProgressPercent').innerText = `${counterPct}%`;
-  document.getElementById('counterProgressAmt').innerText = `${formatPredictionValue(juneCounterRecorded)} of ${formatPredictionValue(juneCounterPred)}`;
+  document.getElementById('counterProgressAmt').innerText = `${formatRupee(juneCounterRecorded)} of ${formatRupee(juneCounterPred)}`;
   document.getElementById('counterProgressBar').style.width = `${counterPct}%`;
 
   document.getElementById('retailerProgressPercent').innerText = `${retailerPct}%`;
-  document.getElementById('retailerProgressAmt').innerText = `${formatPredictionValue(juneRetailerRecorded)} of ${formatPredictionValue(juneRetailerPred)}`;
+  document.getElementById('retailerProgressAmt').innerText = `${formatRupee(juneRetailerRecorded)} of ${formatRupee(juneRetailerPred)}`;
   document.getElementById('retailerProgressBar').style.width = `${retailerPct}%`;
 
   // Daily run rate needed (current day = June 10, so 20 days remaining)
@@ -567,7 +539,7 @@ function calculatePrediction() {
     counterPaceEl.innerText = 'Target Achieved!';
     counterPaceEl.style.color = 'var(--success-color)';
   } else {
-    counterPaceEl.innerText = `Pace: ${formatPredictionValue(Math.round(counterRemaining / daysRemaining))}/day needed`;
+    counterPaceEl.innerText = `Pace: ${formatRupee(Math.round(counterRemaining / daysRemaining))}/day needed`;
     counterPaceEl.style.color = 'var(--text-muted)';
   }
 
@@ -577,7 +549,7 @@ function calculatePrediction() {
     retailerPaceEl.innerText = 'Target Achieved!';
     retailerPaceEl.style.color = 'var(--success-color)';
   } else {
-    retailerPaceEl.innerText = `Pace: ${formatPredictionValue(Math.round(retailerRemaining / daysRemaining))}/day needed`;
+    retailerPaceEl.innerText = `Pace: ${formatRupee(Math.round(retailerRemaining / daysRemaining))}/day needed`;
     retailerPaceEl.style.color = 'var(--text-muted)';
   }
 }
