@@ -194,7 +194,6 @@ function switchTab(tabName) {
 function renderActiveTab() {
   if (activeTab === 'dashboard') {
     renderDashboard();
-    renderTrendChart();
   } else if (activeTab === 'retailers') {
     renderRetailers();
     if (btnPurchaseForecast.classList.contains('active')) {
@@ -375,9 +374,6 @@ function renderDashboard() {
       inventoryBody.appendChild(row);
     });
   }
-
-  // Render YoY & MoM Detailed Analysis
-  renderYoYMoM();
 }
 
 // Render Retailers List
@@ -1138,6 +1134,10 @@ function renderTrendChart() {
 // Render Analytics & Statistics tab containing Charts and metric summaries
 function renderStatisticsTab() {
   if (!historicalData) return;
+
+  // Render the trend line chart and YoY/MoM comparisons
+  renderTrendChart();
+  renderYoYMoM();
 
   const monthNames = [
     "April", "May", "June", "July", "August", "September",

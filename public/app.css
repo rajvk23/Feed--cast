@@ -1,24 +1,24 @@
 /* Core Variables & Reset */
 :root {
-  --primary-color: #1e40af; /* Slate Blue */
-  --primary-hover: #1d4ed8;
-  --primary-light: #eff6ff;
-  --primary-border: #bfdbfe;
+  --primary-color: #0c5132; /* Forest Green */
+  --primary-hover: #0a4027;
+  --primary-light: #e8f5e9;
+  --primary-border: #a3cfbb;
   
-  --accent-color: #0f766e; /* Deep Teal */
-  --accent-hover: #115e59;
-  --accent-light: #f0fdfa;
+  --accent-color: #f59e0b; /* Amber Gold */
+  --accent-hover: #d97706;
+  --accent-light: #fef3c7;
   
-  --bg-app: #f8fafc; /* Cool Slate bg */
+  --bg-app: #f6f8f6;
   --bg-card: #ffffff;
   
-  --text-main: #0f172a;
+  --text-main: #1e293b;
   --text-muted: #64748b;
   --text-white: #ffffff;
   
   --border-color: #e2e8f0;
-  --success-color: #10b981; /* Emerald Success */
-  --success-bg: #d1fae5;
+  --success-color: #16a34a;
+  --success-bg: #dcfce7;
   
   --radius-sm: 8px;
   --radius-md: 12px;

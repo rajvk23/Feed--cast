@@ -23,8 +23,8 @@
           <circle cx="12" cy="14" r="3" fill="#ffc107"/>
           <defs>
             <linearGradient id="logoGrad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#1e40af"/>
-              <stop offset="1" stop-color="#0f766e"/>
+              <stop stop-color="#0c5132"/>
+              <stop offset="1" stop-color="#198754"/>
             </linearGradient>
           </defs>
         </svg>
@@ -223,98 +223,8 @@
             </thead>
             <tbody id="inventoryBody">
               <!-- Dynamically populated -->
-      <!-- Interactive Analytics Chart -->
-      <div class="card mt-4">
-        <div class="card-header-simple">
-          <h3>Annual Sales &amp; Purchases Trends</h3>
-          <span class="badge-status badge-active" style="padding: 0.25rem 0.75rem; border-radius: var(--radius-sm);">Interactive Graph</span>
-        </div>
-        <p class="description-text" style="margin-top: 0.5rem;">Visual comparison of monthly sales (Revenue Outflow) vs purchases (Stock Inflow) over the previous financial year cycle.</p>
-        <div style="position: relative; height: 320px; width: 100%; margin-top: 1rem;">
-          <canvas id="trendChart"></canvas>
-        </div>
-      </div>
-
-      <!-- YoY & MoM Detailed Analysis Card -->
-      <div class="card mt-4" id="yoyMomSection">
-        <div class="card-header-simple">
-          <h3>YoY &amp; MoM Performance Analysis</h3>
-          <span class="badge-status badge-active" style="padding: 0.25rem 0.75rem; border-radius: var(--radius-sm);">Historical Comparison</span>
-        </div>
-        <div class="grid-2col mt-3">
-          <!-- YoY Comparison Card -->
-          <div class="channel-card">
-            <h4 class="mb-3" style="color: var(--primary-color);">Year-Over-Year (YoY) Comparison</h4>
-            
-            <!-- Sales YoY -->
-            <div class="mb-4">
-              <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 4px;">
-                <span><strong id="salesYoYLabelCurrent">Sales (Current Month)</strong></span>
-                <span id="salesYoYCurrent">₹0</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">
-                <span id="salesYoYLabelPrevious">Sales (Last Year)</span>
-                <span id="salesYoYPrevious">₹0</span>
-              </div>
-              <div class="progress-track-channel" style="height: 12px; margin-bottom: 6px;">
-                <div class="progress-bar-channel bg-counter-bar" id="salesYoYBar" style="width: 0%;"></div>
-              </div>
-              <div style="font-size: 0.8rem; text-align: right;" id="salesYoYRate">YoY Growth: 0%</div>
-            </div>
-
-            <!-- Purchases YoY -->
-            <div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 4px;">
-                <span><strong id="purchasesYoYLabelCurrent">Purchases (Current Month)</strong></span>
-                <span id="purchasesYoYCurrent">₹0</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">
-                <span id="purchasesYoYLabelPrevious">Purchases (Last Year)</span>
-                <span id="purchasesYoYPrevious">₹0</span>
-              </div>
-              <div class="progress-track-channel" style="height: 12px; margin-bottom: 6px;">
-                <div class="progress-bar-channel bg-retailer-bar" id="purchasesYoYBar" style="width: 0%;"></div>
-              </div>
-              <div style="font-size: 0.8rem; text-align: right;" id="purchasesYoYRate">YoY Growth: 0%</div>
-            </div>
-          </div>
-
-          <!-- MoM Comparison Card -->
-          <div class="channel-card">
-            <h4 class="mb-3" style="color: var(--primary-color);">Month-Over-Month (MoM) Comparison</h4>
-            
-            <!-- Sales MoM -->
-            <div class="mb-4">
-              <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 4px;">
-                <span><strong id="salesMoMLabelCurrent">Sales (Current Month)</strong></span>
-                <span id="salesMoMCurrent">₹0</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">
-                <span id="salesMoMLabelPrevious">Sales (Prev Month)</span>
-                <span id="salesMoMPrevious">₹0</span>
-              </div>
-              <div class="progress-track-channel" style="height: 12px; margin-bottom: 6px;">
-                <div class="progress-bar-channel bg-counter-bar" id="salesMoMBar" style="width: 0%;"></div>
-              </div>
-              <div style="font-size: 0.8rem; text-align: right;" id="salesMoMRate">MoM Growth: 0%</div>
-            </div>
-
-            <!-- Purchases MoM -->
-            <div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 4px;">
-                <span><strong id="purchasesMoMLabelCurrent">Purchases (Current Month)</strong></span>
-                <span id="purchasesMoMCurrent">₹0</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">
-                <span id="purchasesMoMLabelPrevious">Purchases (Prev Month)</span>
-                <span id="purchasesMoMPrevious">₹0</span>
-              </div>
-              <div class="progress-track-channel" style="height: 12px; margin-bottom: 6px;">
-                <div class="progress-bar-channel bg-retailer-bar" id="purchasesMoMBar" style="width: 0%;"></div>
-              </div>
-              <div style="font-size: 0.8rem; text-align: right;" id="purchasesMoMRate">MoM Growth: 0%</div>
-            </div>
-          </div>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -568,6 +478,102 @@
     <section class="tab-content" id="statistics">
       <div class="section-header">
         <h2>Analytics &amp; Statistics</h2>
+        <span class="badge-status badge-active" style="padding: 0.25rem 0.75rem; border-radius: var(--radius-sm);">Active Tracking</span>
+      </div>
+
+      <!-- Interactive Analytics Chart (Moved here) -->
+      <div class="card mt-4">
+        <div class="card-header-simple">
+          <h3>Annual Sales &amp; Purchases Trends</h3>
+          <span class="badge-status badge-active" style="padding: 0.25rem 0.75rem; border-radius: var(--radius-sm);">Interactive Graph</span>
+        </div>
+        <p class="description-text" style="margin-top: 0.5rem;">Visual comparison of monthly sales (Revenue Outflow) vs purchases (Stock Inflow) over the previous financial year cycle.</p>
+        <div style="position: relative; height: 320px; width: 100%; margin-top: 1rem;">
+          <canvas id="trendChart"></canvas>
+        </div>
+      </div>
+
+      <!-- YoY & MoM Detailed Analysis Card (Moved here) -->
+      <div class="card mt-4" id="yoyMomSection">
+        <div class="card-header-simple">
+          <h3>YoY &amp; MoM Performance Analysis</h3>
+          <span class="badge-status badge-active" style="padding: 0.25rem 0.75rem; border-radius: var(--radius-sm);">Historical Comparison</span>
+        </div>
+        <div class="grid-2col mt-3">
+          <!-- YoY Comparison Card -->
+          <div class="channel-card">
+            <h4 class="mb-3" style="color: var(--primary-color);">Year-Over-Year (YoY) Comparison</h4>
+            
+            <!-- Sales YoY -->
+            <div class="mb-4">
+              <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 4px;">
+                <span><strong id="salesYoYLabelCurrent">Sales (Current Month)</strong></span>
+                <span id="salesYoYCurrent">₹0</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">
+                <span id="salesYoYLabelPrevious">Sales (Last Year)</span>
+                <span id="salesYoYPrevious">₹0</span>
+              </div>
+              <div class="progress-track-channel" style="height: 12px; margin-bottom: 6px;">
+                <div class="progress-bar-channel bg-counter-bar" id="salesYoYBar" style="width: 0%;"></div>
+              </div>
+              <div style="font-size: 0.8rem; text-align: right;" id="salesYoYRate">YoY Growth: 0%</div>
+            </div>
+
+            <!-- Purchases YoY -->
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 4px;">
+                <span><strong id="purchasesYoYLabelCurrent">Purchases (Current Month)</strong></span>
+                <span id="purchasesYoYCurrent">₹0</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">
+                <span id="purchasesYoYLabelPrevious">Purchases (Last Year)</span>
+                <span id="purchasesYoYPrevious">₹0</span>
+              </div>
+              <div class="progress-track-channel" style="height: 12px; margin-bottom: 6px;">
+                <div class="progress-bar-channel bg-retailer-bar" id="purchasesYoYBar" style="width: 0%;"></div>
+              </div>
+              <div style="font-size: 0.8rem; text-align: right;" id="purchasesYoYRate">YoY Growth: 0%</div>
+            </div>
+          </div>
+
+          <!-- MoM Comparison Card -->
+          <div class="channel-card">
+            <h4 class="mb-3" style="color: var(--primary-color);">Month-Over-Month (MoM) Comparison</h4>
+            
+            <!-- Sales MoM -->
+            <div class="mb-4">
+              <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 4px;">
+                <span><strong id="salesMoMLabelCurrent">Sales (Current Month)</strong></span>
+                <span id="salesMoMCurrent">₹0</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">
+                <span id="salesMoMLabelPrevious">Sales (Prev Month)</span>
+                <span id="salesMoMPrevious">₹0</span>
+              </div>
+              <div class="progress-track-channel" style="height: 12px; margin-bottom: 6px;">
+                <div class="progress-bar-channel bg-counter-bar" id="salesMoMBar" style="width: 0%;"></div>
+              </div>
+              <div style="font-size: 0.8rem; text-align: right;" id="salesMoMRate">MoM Growth: 0%</div>
+            </div>
+
+            <!-- Purchases MoM -->
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 4px;">
+                <span><strong id="purchasesMoMLabelCurrent">Purchases (Current Month)</strong></span>
+                <span id="purchasesMoMCurrent">₹0</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">
+                <span id="purchasesMoMLabelPrevious">Purchases (Prev Month)</span>
+                <span id="purchasesMoMPrevious">₹0</span>
+              </div>
+              <div class="progress-track-channel" style="height: 12px; margin-bottom: 6px;">
+                <div class="progress-bar-channel bg-retailer-bar" id="purchasesMoMBar" style="width: 0%;"></div>
+              </div>
+              <div style="font-size: 0.8rem; text-align: right;" id="purchasesMoMRate">MoM Growth: 0%</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Quick stats summaries -->
