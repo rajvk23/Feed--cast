@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/app.css">
+  <!-- Chart.js for data visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <!-- Header Bar -->
@@ -217,6 +219,18 @@
             </thead>
             <tbody id="inventoryBody">
               <!-- Dynamically populated -->
+      <!-- Interactive Analytics Chart -->
+      <div class="card mt-4">
+        <div class="card-header-simple">
+          <h3>Annual Sales &amp; Purchases Trends</h3>
+          <span class="badge-status badge-active" style="padding: 0.25rem 0.75rem; border-radius: var(--radius-sm);">Interactive Graph</span>
+        </div>
+        <p class="description-text" style="margin-top: 0.5rem;">Visual comparison of monthly sales (Revenue Outflow) vs purchases (Stock Inflow) over the previous financial year cycle.</p>
+        <div style="position: relative; height: 320px; width: 100%; margin-top: 1rem;">
+          <canvas id="trendChart"></canvas>
+        </div>
+      </div>
+
       <!-- YoY & MoM Detailed Analysis Card -->
       <div class="card mt-4" id="yoyMomSection">
         <div class="card-header-simple">

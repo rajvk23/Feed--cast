@@ -2,6 +2,7 @@
 let sales = [];
 let purchases = [];
 let activeTab = 'dashboard';
+let trendChart = null;
 
 // Inventory Database
 let inventory = [
@@ -189,6 +190,7 @@ function switchTab(tabName) {
 function renderActiveTab() {
   if (activeTab === 'dashboard') {
     renderDashboard();
+    renderTrendChart();
   } else if (activeTab === 'retailers') {
     renderRetailers();
     if (btnPurchaseForecast.classList.contains('active')) {
@@ -1023,4 +1025,108 @@ function renderYoYMoM() {
   updateComparison(currentSales, prevSales, 'salesMoMRate', 'salesMoMBar');
   updateComparison(currentPurchases, prevPurchases, 'purchasesMoMRate', 'purchasesMoMBar');
 }
+
+// Render Interactive Annual Trends Line Graph
+function renderTrendChart() {
+  if (!historicalData) return;
+  const ctx = document.getElementById('trendChart');
+  if (!ctx) return;
+
+  const monthLabels = [
+    "Apr 25", "May 25", "Jun 25", "Jul 25", "Aug 25", "Sep 25", 
+    "Oct 25", "Nov 25", "Dec 25", "Jan 26", "Feb 26", "Mar 26"
+  ];
+
+  // Extract 12 months historical (FY 2025-2026)
+  const salesHist = historicalData.gst_summary.output.map(r => r.Exempted + r.Taxable);
+  const purchasesHist = historicalData.gst_summary.input.map(r => r.Exempted + r.Taxable);
+
+  if (trendChart) {
+    trendChart.destroy();
+  }
+
+  trendChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: monthLabels,
+      datasets: [
+        {
+          label: 'Sales (FY 2025-26)',
+          data: salesHist,
+          borderColor: '#10b981', // green
+          backgroundColor: 'rgba(16, 185, 129, 0.05)',
+          borderWidth: 3,
+          pointRadius: 4,
+          pointBackgroundColor: '#10b981',
+          tension: 0.35,
+          fill: true
+        },
+        {
+          label: 'Purchases (FY 2025-26)',
+          data: purchasesHist,
+          borderColor: '#3b82f6', // blue
+          backgroundColor: 'rgba(59, 130, 246, 0.05)',
+          borderWidth: 3,
+          pointRadius: 4,
+          pointBackgroundColor: '#3b82f6',
+          tension: 0.35,
+          fill: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            font: { family: 'Inter', size: 12, weight: '500' },
+            boxWidth: 15,
+            padding: 15
+          }
+        },
+        tooltip: {
+          backgroundColor: '#1e293b',
+          titleFont: { family: 'Outfit', size: 13, weight: '600' },
+          bodyFont: { family: 'Inter', size: 12 },
+          padding: 10,
+          boxPadding: 5,
+          callbacks: {
+            label: function(context) {
+              let label = context.dataset.label.split(' ')[0] || '';
+              if (label) {
+                label += ': ';
+              }
+              if (context.parsed.y !== null) {
+                label += rupeeFormatter.format(context.parsed.y);
+              }
+              return label;
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          grid: { color: '#f1f5f9' },
+          ticks: {
+            font: { family: 'Inter', size: 11 },
+            color: '#64748b',
+            callback: function(value) {
+              return '₹' + (value / 100000).toFixed(1) + 'L';
+            }
+          }
+        },
+        x: {
+          grid: { display: false },
+          ticks: {
+            font: { family: 'Inter', size: 11 },
+            color: '#64748b'
+          }
+        }
+      }
+    }
+  });
+}
+
 
