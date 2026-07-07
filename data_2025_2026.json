@@ -1,0 +1,406 @@
+{
+  "purchases": [
+    {
+      "Supplier": "VIJAY SAI TRADIN",
+      "Date": "2025-04-15",
+      "Voucher": "GP2",
+      "Invoice": "1",
+      "Net_Amount": 825000.0,
+      "Type": "Out of State",
+      "Month": "April 2025",
+      "Season": "Summer (Low Demand)"
+    },
+    {
+      "Supplier": "SHREE BALAJII IN",
+      "Date": "2025-04-26",
+      "Voucher": "GP4",
+      "Invoice": "BOS/25-2",
+      "Net_Amount": 450290.0,
+      "Type": "Out of State",
+      "Month": "April 2025",
+      "Season": "Summer (Low Demand)"
+    },
+    {
+      "Supplier": "DHARIWAL FOOD",
+      "Date": "2025-05-21",
+      "Voucher": "GP7",
+      "Invoice": "T0010008",
+      "Net_Amount": 19740.0,
+      "Type": "Out of State",
+      "Month": "May 2025",
+      "Season": "Summer (Low Demand)"
+    },
+    {
+      "Supplier": "DHARIWAL FOOD",
+      "Date": "2025-05-21",
+      "Voucher": "GP8",
+      "Invoice": "B0010023",
+      "Net_Amount": 440200.0,
+      "Type": "Out of State",
+      "Month": "May 2025",
+      "Season": "Summer (Low Demand)"
+    },
+    {
+      "Supplier": "DHARIWAL FOOD",
+      "Date": "2025-05-21",
+      "Voucher": "GP9",
+      "Invoice": "B0010023",
+      "Net_Amount": 31080.0,
+      "Type": "Out of State",
+      "Month": "May 2025",
+      "Season": "Summer (Low Demand)"
+    },
+    {
+      "Supplier": "SRI ANNAPURNA R",
+      "Date": "2025-06-18",
+      "Voucher": "GP11",
+      "Invoice": "1170",
+      "Net_Amount": 511910.0,
+      "Type": "Out of State",
+      "Month": "June 2025",
+      "Season": "Kharif (High Demand)"
+    },
+    {
+      "Supplier": "SRI ANNAPURNA R",
+      "Date": "2025-07-12",
+      "Voucher": "GP13",
+      "Invoice": "1565",
+      "Net_Amount": 354240.0,
+      "Type": "Out of State",
+      "Month": "July 2025",
+      "Season": "Kharif (High Demand)"
+    },
+    {
+      "Supplier": "SHREE BALAJII IN",
+      "Date": "2025-07-22",
+      "Voucher": "GP14",
+      "Invoice": "BOS/25-2",
+      "Net_Amount": 370570.0,
+      "Type": "Out of State",
+      "Month": "July 2025",
+      "Season": "Kharif (High Demand)"
+    },
+    {
+      "Supplier": "VIJAYNAGAR BIOT",
+      "Date": "2025-07-23",
+      "Voucher": "GP15",
+      "Invoice": "",
+      "Net_Amount": 200004.0,
+      "Type": "Out of State",
+      "Month": "July 2025",
+      "Season": "Kharif (High Demand)"
+    },
+    {
+      "Supplier": "VIJAY Roller Flour M",
+      "Date": "2025-08-22",
+      "Voucher": "GP18",
+      "Invoice": "2961/25-2",
+      "Net_Amount": 493056.0,
+      "Type": "Out of State",
+      "Month": "August 2025",
+      "Season": "Kharif (High Demand)"
+    },
+    {
+      "Supplier": "K RAGUL TRADER",
+      "Date": "2025-09-12",
+      "Voucher": "GP21",
+      "Invoice": "118",
+      "Net_Amount": 341900.0,
+      "Type": "Out of State",
+      "Month": "September 2025",
+      "Season": "Kharif (High Demand)"
+    },
+    {
+      "Supplier": "DHARIWAL FOOD",
+      "Date": "2025-12-04",
+      "Voucher": "GP38",
+      "Invoice": "B0010119",
+      "Net_Amount": 523350.0,
+      "Type": "Out of State",
+      "Month": "December 2025",
+      "Season": "Rabi (Moderate Demand)"
+    },
+    {
+      "Supplier": "DHARIWAL FOOD",
+      "Date": "2025-12-04",
+      "Voucher": "GP39",
+      "Invoice": "T0010046",
+      "Net_Amount": 63051.0,
+      "Type": "Out of State",
+      "Month": "December 2025",
+      "Season": "Rabi (Moderate Demand)"
+    },
+    {
+      "Supplier": "DHARIWAL FOOD",
+      "Date": "2026-01-10",
+      "Voucher": "GP45",
+      "Invoice": "B0010138",
+      "Net_Amount": 33080.0,
+      "Type": "Out of State",
+      "Month": "January 2026",
+      "Season": "Rabi (Moderate Demand)"
+    },
+    {
+      "Supplier": "DHARIWAL FOOD",
+      "Date": "2026-01-10",
+      "Voucher": "GP46",
+      "Invoice": "T0010054",
+      "Net_Amount": 21000.0,
+      "Type": "Out of State",
+      "Month": "January 2026",
+      "Season": "Rabi (Moderate Demand)"
+    },
+    {
+      "Supplier": "DHARIWAL FOOD",
+      "Date": "2026-01-10",
+      "Voucher": "GP47",
+      "Invoice": "B0010138",
+      "Net_Amount": 448320.0,
+      "Type": "Out of State",
+      "Month": "January 2026",
+      "Season": "Rabi (Moderate Demand)"
+    },
+    {
+      "Supplier": "VIJAYNAGAR BIOT",
+      "Date": "2026-01-24",
+      "Voucher": "GP49",
+      "Invoice": "VBL-OD4/",
+      "Net_Amount": 474994.0,
+      "Type": "Out of State",
+      "Month": "January 2026",
+      "Season": "Rabi (Moderate Demand)"
+    },
+    {
+      "Supplier": "VS AGRI",
+      "Date": "2026-02-09",
+      "Voucher": "GP53",
+      "Invoice": "90",
+      "Net_Amount": 818880.0,
+      "Type": "Out of State",
+      "Month": "February 2026",
+      "Season": "Rabi (Moderate Demand)"
+    }
+  ],
+  "gst_summary": {
+    "input": [
+      {
+        "Month-Year": "Apr - 2025",
+        "Exempted": 1498290.0,
+        "Taxable": 200000.0,
+        "SGST": 5000.0,
+        "CGST": 5000.0,
+        "IGST": 0.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "May - 2025",
+        "Exempted": 797980.0,
+        "Taxable": 18800.0,
+        "SGST": 0.0,
+        "CGST": 0.0,
+        "IGST": 940.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Jun - 2025",
+        "Exempted": 734910.0,
+        "Taxable": 180000.0,
+        "SGST": 4500.0,
+        "CGST": 4500.0,
+        "IGST": 0.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Jul - 2025",
+        "Exempted": 947810.0,
+        "Taxable": 190480.0,
+        "SGST": 0.0,
+        "CGST": 0.0,
+        "IGST": 9524.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Aug - 2025",
+        "Exempted": 613156.0,
+        "Taxable": 180000.0,
+        "SGST": 4500.0,
+        "CGST": 4500.0,
+        "IGST": 0.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Sep - 2025",
+        "Exempted": 710600.0,
+        "Taxable": 180000.0,
+        "SGST": 4500.0,
+        "CGST": 4500.0,
+        "IGST": 0.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Oct - 2025",
+        "Exempted": 1292344.7,
+        "Taxable": 180000.0,
+        "SGST": 4500.0,
+        "CGST": 4500.0,
+        "IGST": 0.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Nov - 2025",
+        "Exempted": 1696689.0,
+        "Taxable": 180000.0,
+        "SGST": 4500.0,
+        "CGST": 4500.0,
+        "IGST": 0.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Dec - 2025",
+        "Exempted": 1883281.5,
+        "Taxable": 240048.5,
+        "SGST": 4500.0,
+        "CGST": 4500.0,
+        "IGST": 3002.43,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Jan - 2026",
+        "Exempted": 982645.5,
+        "Taxable": 382589.0,
+        "SGST": 0.0,
+        "CGST": 0.0,
+        "IGST": 23618.75,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Feb - 2026",
+        "Exempted": 2303528.6,
+        "Taxable": 382589.0,
+        "SGST": 9564.72,
+        "CGST": 9564.72,
+        "IGST": 0.0,
+        "Cess": 837.29
+      },
+      {
+        "Month-Year": "Mar - 2026",
+        "Exempted": 1689950.7,
+        "Taxable": 104745.5,
+        "SGST": 2618.64,
+        "CGST": 2618.64,
+        "IGST": 0.0,
+        "Cess": 3834.45
+      }
+    ],
+    "output": [
+      {
+        "Month-Year": "Apr - 2025",
+        "Exempted": 1269041.0,
+        "Taxable": 170800.0,
+        "SGST": 4270.0,
+        "CGST": 4270.0,
+        "IGST": 0.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "May - 2025",
+        "Exempted": 1256428.5,
+        "Taxable": 144371.48,
+        "SGST": 3609.26,
+        "CGST": 3609.26,
+        "IGST": 0.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Jun - 2025",
+        "Exempted": 1017170.0,
+        "Taxable": 139419.12,
+        "SGST": 3485.44,
+        "CGST": 3485.44,
+        "IGST": 0.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Jul - 2025",
+        "Exempted": 1284244.0,
+        "Taxable": 228904.84,
+        "SGST": 5722.58,
+        "CGST": 5722.58,
+        "IGST": 0.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Aug - 2025",
+        "Exempted": 1411316.5,
+        "Taxable": 207033.34,
+        "SGST": 5175.83,
+        "CGST": 5175.83,
+        "IGST": 0.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Sep - 2025",
+        "Exempted": 1067605.0,
+        "Taxable": 158400.02,
+        "SGST": 3959.99,
+        "CGST": 3959.99,
+        "IGST": 0.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Oct - 2025",
+        "Exempted": 1170581.0,
+        "Taxable": 222838.04,
+        "SGST": 5570.98,
+        "CGST": 5570.98,
+        "IGST": 0.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Nov - 2025",
+        "Exempted": 1503157.0,
+        "Taxable": 268980.98,
+        "SGST": 6724.51,
+        "CGST": 6724.51,
+        "IGST": 0.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Dec - 2025",
+        "Exempted": 1407365.0,
+        "Taxable": 167980.96,
+        "SGST": 4199.52,
+        "CGST": 4199.52,
+        "IGST": 0.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Jan - 2026",
+        "Exempted": 1788128.0,
+        "Taxable": 236842.94,
+        "SGST": 5921.03,
+        "CGST": 5921.03,
+        "IGST": 0.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Feb - 2026",
+        "Exempted": 1808573.0,
+        "Taxable": 194185.66,
+        "SGST": 4854.67,
+        "CGST": 4854.67,
+        "IGST": 0.0,
+        "Cess": 0.0
+      },
+      {
+        "Month-Year": "Mar - 2026",
+        "Exempted": 1575252.0,
+        "Taxable": 277943.67,
+        "SGST": 6948.54,
+        "CGST": 6948.54,
+        "IGST": 0.0,
+        "Cess": 0.0
+      }
+    ]
+  }
+}
