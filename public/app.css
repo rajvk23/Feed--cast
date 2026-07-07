@@ -1,31 +1,32 @@
 /* Core Variables & Reset */
 :root {
-  --primary-color: #0c5132;
-  --primary-hover: #0a4027;
-  --primary-light: #e8f5e9;
-  --primary-border: #a3cfbb;
-  --accent-color: #f59e0b;
-  --accent-hover: #d97706;
-  --accent-light: #fef3c7;
+  --primary-color: #1e40af; /* Slate Blue */
+  --primary-hover: #1d4ed8;
+  --primary-light: #eff6ff;
+  --primary-border: #bfdbfe;
   
-  --bg-app: #f6f8f6;
+  --accent-color: #0f766e; /* Deep Teal */
+  --accent-hover: #115e59;
+  --accent-light: #f0fdfa;
+  
+  --bg-app: #f8fafc; /* Cool Slate bg */
   --bg-card: #ffffff;
   
-  --text-main: #1e293b;
+  --text-main: #0f172a;
   --text-muted: #64748b;
   --text-white: #ffffff;
   
   --border-color: #e2e8f0;
-  --success-color: #16a34a;
-  --success-bg: #dcfce7;
+  --success-color: #10b981; /* Emerald Success */
+  --success-bg: #d1fae5;
   
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 20px;
   
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 20px rgba(12, 81, 50, 0.06);
-  --shadow-lg: 0 10px 30px rgba(12, 81, 50, 0.1);
+  --shadow-md: 0 4px 20px rgba(30, 64, 175, 0.05);
+  --shadow-lg: 0 10px 30px rgba(30, 64, 175, 0.08);
   
   --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -1239,5 +1240,23 @@ tr:nth-child(3) .rank-badge {
   background-color: var(--primary-color);
   color: var(--text-white);
   box-shadow: var(--shadow-sm);
+}
+
+/* App Footer Styling */
+.app-footer {
+  background-color: var(--bg-card);
+  border-top: 1px solid var(--border-color);
+  padding: 2.5rem 1.5rem;
+  margin-top: 5rem;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  box-shadow: var(--shadow-sm);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 

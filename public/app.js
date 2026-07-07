@@ -3,6 +3,10 @@ let sales = [];
 let purchases = [];
 let activeTab = 'dashboard';
 let trendChart = null;
+let statsBarChart = null;
+let statsRadarChart = null;
+let statsPieChart = null;
+let statsSupplierChart = null;
 
 // Inventory Database
 let inventory = [
@@ -198,6 +202,8 @@ function renderActiveTab() {
     }
   } else if (activeTab === 'prediction') {
     calculatePrediction();
+  } else if (activeTab === 'statistics') {
+    renderStatisticsTab();
   }
 }
 
@@ -1128,5 +1134,250 @@ function renderTrendChart() {
     }
   });
 }
+
+// Render Analytics & Statistics tab containing Charts and metric summaries
+function renderStatisticsTab() {
+  if (!historicalData) return;
+
+  const monthNames = [
+    "April", "May", "June", "July", "August", "September",
+    "October", "November", "December", "January", "February", "March"
+  ];
+  
+  const shortMonthLabels = [
+    "Apr 25", "May 25", "Jun 25", "Jul 25", "Aug 25", "Sep 25",
+    "Oct 25", "Nov 25", "Dec 25", "Jan 26", "Feb 26", "Mar 26"
+  ];
+
+  const salesHist = historicalData.gst_summary.output.map(r => r.Exempted + r.Taxable);
+  const purchasesHist = historicalData.gst_summary.input.map(r => r.Exempted + r.Taxable);
+
+  // 1. Calculate Metric Summaries
+  const totalSalesVal = salesHist.reduce((a,b) => a+b, 0);
+  const totalPurVal = purchasesHist.reduce((a,b) => a+b, 0);
+  const avgSalesVal = Math.round(totalSalesVal / 12);
+  const avgPurVal = Math.round(totalPurVal / 12);
+
+  // Find Peak Month
+  let maxSales = 0;
+  let maxMonthIdx = 0;
+  salesHist.forEach((val, idx) => {
+    if (val > maxSales) {
+      maxSales = val;
+      maxMonthIdx = idx;
+    }
+  });
+
+  // Update UI cards
+  document.getElementById('statsAvgSales').innerText = formatRupee(avgSalesVal);
+  document.getElementById('statsAvgPurchases').innerText = formatRupee(avgPurVal);
+  document.getElementById('statsPeakMonth').innerText = `${monthNames[maxMonthIdx]} (₹${(maxSales/100000).toFixed(1)}L)`;
+
+  // 2. Bar Chart: Sales vs Purchases Comparison
+  const barCtx = document.getElementById('statsBarChart');
+  if (barCtx) {
+    if (statsBarChart) statsBarChart.destroy();
+    statsBarChart = new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: shortMonthLabels,
+        datasets: [
+          {
+            label: 'Sales Revenue',
+            data: salesHist,
+            backgroundColor: 'rgba(16, 185, 129, 0.75)', // green
+            borderColor: '#10b981',
+            borderWidth: 1,
+            borderRadius: 4
+          },
+          {
+            label: 'Purchase Expenses',
+            data: purchasesHist,
+            backgroundColor: 'rgba(59, 130, 246, 0.75)', // blue
+            borderColor: '#3b82f6',
+            borderWidth: 1,
+            borderRadius: 4
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'top', labels: { font: { family: 'Inter', size: 11 } } },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return context.dataset.label + ': ' + rupeeFormatter.format(context.raw);
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            grid: { color: '#f1f5f9' },
+            ticks: {
+              font: { family: 'Inter', size: 10 },
+              callback: function(value) { return '₹' + (value/100000).toFixed(1) + 'L'; }
+            }
+          },
+          x: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 10 } } }
+        }
+      }
+    });
+  }
+
+  // 3. Radar Chart: Seasonal Demand
+  // Seasons: Kharif (Jun-Oct), Rabi (Nov-Feb), Summer (Mar-May)
+  const kharifSales = salesHist.slice(2, 7).reduce((a,b) => a+b, 0);
+  const kharifPurchases = purchasesHist.slice(2, 7).reduce((a,b) => a+b, 0);
+
+  const rabiSales = salesHist.slice(7, 11).reduce((a,b) => a+b, 0);
+  const rabiPurchases = purchasesHist.slice(7, 11).reduce((a,b) => a+b, 0);
+
+  const summerSales = salesHist[11] + salesHist[0] + salesHist[1];
+  const summerPurchases = purchasesHist[11] + purchasesHist[0] + purchasesHist[1];
+
+  const radarCtx = document.getElementById('statsRadarChart');
+  if (radarCtx) {
+    if (statsRadarChart) statsRadarChart.destroy();
+    statsRadarChart = new Chart(radarCtx, {
+      type: 'radar',
+      data: {
+        labels: ['Kharif Season (Jun-Oct)', 'Rabi Season (Nov-Feb)', 'Summer Season (Mar-May)'],
+        datasets: [
+          {
+            label: 'Sales Demand',
+            data: [kharifSales, rabiSales, summerSales],
+            backgroundColor: 'rgba(16, 185, 129, 0.15)',
+            borderColor: '#10b981',
+            borderWidth: 2,
+            pointBackgroundColor: '#10b981'
+          },
+          {
+            label: 'Purchase Expenses',
+            data: [kharifPurchases, rabiPurchases, summerPurchases],
+            backgroundColor: 'rgba(59, 130, 246, 0.15)',
+            borderColor: '#3b82f6',
+            borderWidth: 2,
+            pointBackgroundColor: '#3b82f6'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'top', labels: { font: { family: 'Inter', size: 11 } } },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return context.dataset.label + ': ' + rupeeFormatter.format(context.raw);
+              }
+            }
+          }
+        },
+        scales: {
+          r: {
+            ticks: { display: false },
+            pointLabels: { font: { family: 'Outfit', size: 11, weight: '600' } }
+          }
+        }
+      }
+    });
+  }
+
+  // 4. Pie Chart: Customer Distribution Share
+  let counterTotal = sales.filter(s => s.Customer === 'COUNTER SALES').reduce((a,b) => a + b.Net_Amount, 0);
+  let retailerTotal = sales.filter(s => s.Customer !== 'COUNTER SALES').reduce((a,b) => a + b.Net_Amount, 0);
+  
+  if (counterTotal === 0 && retailerTotal === 0) {
+    counterTotal = 858762;
+    retailerTotal = 619806;
+  }
+
+  const pieCtx = document.getElementById('statsPieChart');
+  if (pieCtx) {
+    if (statsPieChart) statsPieChart.destroy();
+    statsPieChart = new Chart(pieCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Counter Sales (Walk-ins)', 'Regular Retailer Ledgers'],
+        datasets: [{
+          data: [counterTotal, retailerTotal],
+          backgroundColor: ['#0f766e', '#3b82f6'], // Teal and Blue
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'right', labels: { font: { family: 'Inter', size: 11 } } },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const value = context.raw;
+                const total = counterTotal + retailerTotal;
+                const percentage = ((value / total) * 100).toFixed(1);
+                return context.label + ': ' + rupeeFormatter.format(value) + ' (' + percentage + '%)';
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // 5. Supplier Allocation Share
+  const supplierSums = {};
+  purchases.forEach(p => {
+    if (p.Supplier) {
+      supplierSums[p.Supplier] = (supplierSums[p.Supplier] || 0) + p.Net_Amount;
+    }
+  });
+
+  let supplierLabels = Object.keys(supplierSums);
+  let supplierData = Object.values(supplierSums);
+
+  if (supplierLabels.length === 0) {
+    supplierLabels = ['PST TRADERS', 'SRI AISHWARYA FEED', 'DHARWAL FOOD', 'VIJAY NAGAR BIO', 'KAMDHENU FEED'];
+    supplierData = [707130, 368165, 322850, 210000, 73900];
+  }
+
+  const supCtx = document.getElementById('statsSupplierChart');
+  if (supCtx) {
+    if (statsSupplierChart) statsSupplierChart.destroy();
+    statsSupplierChart = new Chart(supCtx, {
+      type: 'pie',
+      data: {
+        labels: supplierLabels,
+        datasets: [{
+          data: supplierData,
+          backgroundColor: ['#1e3a8a', '#10b981', '#f59e0b', '#3b82f6', '#0f766e'],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'right', labels: { font: { family: 'Inter', size: 10 } } },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const value = context.raw;
+                const total = supplierData.reduce((a,b)=>a+b, 0);
+                const percentage = ((value / total) * 100).toFixed(1);
+                return context.label + ': ' + rupeeFormatter.format(value) + ' (' + percentage + '%)';
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+}
+
 
 

@@ -23,8 +23,8 @@
           <circle cx="12" cy="14" r="3" fill="#ffc107"/>
           <defs>
             <linearGradient id="logoGrad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#0c5132"/>
-              <stop offset="1" stop-color="#198754"/>
+              <stop stop-color="#1e40af"/>
+              <stop offset="1" stop-color="#0f766e"/>
             </linearGradient>
           </defs>
         </svg>
@@ -53,6 +53,10 @@
       <button class="nav-tab" data-tab="prediction">
         <svg viewBox="0 0 24 24" class="tab-icon"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"/></svg>
         <span>AI Prediction</span>
+      </button>
+      <button class="nav-tab" data-tab="statistics">
+        <svg viewBox="0 0 24 24" class="tab-icon"><path d="M19 3H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+        <span>Statistics</span>
       </button>
       <button class="nav-tab btn-accent" data-tab="add-sale">
         <svg viewBox="0 0 24 24" class="tab-icon"><path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"/></svg>
@@ -560,6 +564,80 @@
       </div>
     </section>
 
+    <!-- Statistics Tab -->
+    <section class="tab-content" id="statistics">
+      <div class="section-header">
+        <h2>Analytics &amp; Statistics</h2>
+      </div>
+
+      <!-- Quick stats summaries -->
+      <div class="metrics-grid mb-4">
+        <div class="metric-card card-accent-gold">
+          <div class="card-info">
+            <span class="card-label">Avg. Monthly Revenue (Sales)</span>
+            <span class="card-value" id="statsAvgSales">₹0</span>
+            <span class="card-meta">Based on historical records</span>
+          </div>
+        </div>
+        <div class="metric-card purchase-card">
+          <div class="card-info">
+            <span class="card-label">Avg. Monthly Expenses (Purchases)</span>
+            <span class="card-value" id="statsAvgPurchases">₹0</span>
+            <span class="card-meta">Based on supplier billing</span>
+          </div>
+        </div>
+        <div class="metric-card profit-card" style="border-left: 4px solid var(--primary-color);">
+          <div class="card-info">
+            <span class="card-label">Peak Demand Month</span>
+            <span class="card-value" id="statsPeakMonth" style="color: var(--primary-color);">N/A</span>
+            <span class="card-meta">Highest monthly turnover</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts grid -->
+      <div class="grid-2col">
+        <!-- Monthly Purchase vs Sale Bar Chart -->
+        <div class="card">
+          <h3 class="card-title-border">Sales vs. Purchases Comparison</h3>
+          <p class="description-text">Monthly transactional comparison showing inventory inflow expenses (Purchases) vs customer retail outflow revenues (Sales).</p>
+          <div style="position: relative; height: 300px; width: 100%; margin-top: 1rem;">
+            <canvas id="statsBarChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Seasonal Demand Distribution Chart -->
+        <div class="card">
+          <h3 class="card-title-border">Crop Season Demand Distribution</h3>
+          <p class="description-text">Aggregate distribution of cattle feed demand grouped by agricultural crop seasons (Kharif, Rabi, Summer).</p>
+          <div style="position: relative; height: 300px; width: 100%; margin-top: 1rem;">
+            <canvas id="statsRadarChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Second row charts -->
+      <div class="grid-2col mt-4">
+        <!-- Sales Channels Share -->
+        <div class="card">
+          <h3 class="card-title-border">Customer Distribution Share</h3>
+          <p class="description-text">Comparative share of revenue generated from walk-in Counter Sales vs Regular wholesale Retailers ledger.</p>
+          <div style="position: relative; height: 260px; width: 100%; margin-top: 1rem;">
+            <canvas id="statsPieChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Supplier Allocation share -->
+        <div class="card">
+          <h3 class="card-title-border">Supplier Inflow Distribution</h3>
+          <p class="description-text">Percentage allocation of procurement capital among active cattle feed suppliers.</p>
+          <div style="position: relative; height: 260px; width: 100%; margin-top: 1rem;">
+            <canvas id="statsSupplierChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Record Sale Tab -->
     <section class="tab-content" id="add-sale">
       <div class="section-header">
@@ -681,6 +759,14 @@
       </div>
     </section>
   </main>
+
+  <!-- App Footer -->
+  <footer class="app-footer">
+    <div class="footer-content">
+      <p><strong>© 2026 Satya Venkateswara Traders - Business Intelligence &amp; AI Analytics Portal</strong></p>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">Developed by SVT Engineering Team | Academic Capstone Project 2026</p>
+    </div>
+  </footer>
 
   <!-- Notification Banner (Toast) -->
   <div class="toast-notification" id="toast">
