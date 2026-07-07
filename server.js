@@ -67,6 +67,22 @@ app.get('/api/data', (req, res) => {
   res.json(getCombinedData());
 });
 
+// API: Get historical data (FY 2025-2026)
+app.get('/api/historical', (req, res) => {
+  try {
+    const historicalPath = path.join(__dirname, 'data_2025_2026.json');
+    if (fs.existsSync(historicalPath)) {
+      const data = JSON.parse(fs.readFileSync(historicalPath, 'utf8'));
+      res.json(data);
+    } else {
+      res.status(404).json({ error: 'Historical data file not found' });
+    }
+  } catch (err) {
+    console.error('Error reading historical data:', err);
+    res.status(500).json({ error: 'Failed to read historical data' });
+  }
+});
+
 // API: Post new sale
 app.post('/api/sales', (req, res) => {
   const { Customer, Date: dateStr, Net_Amount, Customer_Type } = req.body;
