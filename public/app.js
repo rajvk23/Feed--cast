@@ -1028,20 +1028,54 @@ function renderYoYMoM() {
   updateComparison(currentPurchases, prevPurchases, 'purchasesMoMRate', 'purchasesMoMBar');
 }
 
-// Render Interactive Annual Trends Line Graph
+// Render Interactive Annual Trends Line Graph showing last year baseline vs current live progress
 function renderTrendChart() {
   if (!historicalData) return;
   const ctx = document.getElementById('trendChart');
   if (!ctx) return;
 
+  const monthNames = [
+    "April", "May", "June", "July", "August", "September",
+    "October", "November", "December", "January", "February", "March"
+  ];
+
   const monthLabels = [
-    "Apr 25", "May 25", "Jun 25", "Jul 25", "Aug 25", "Sep 25", 
-    "Oct 25", "Nov 25", "Dec 25", "Jan 26", "Feb 26", "Mar 26"
+    "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"
   ];
 
   // Extract 12 months historical (FY 2025-2026)
   const salesHist = historicalData.gst_summary.output.map(r => r.Exempted + r.Taxable);
   const purchasesHist = historicalData.gst_summary.input.map(r => r.Exempted + r.Taxable);
+
+  // Group current year sales & purchases (FY 2026-2027) dynamically
+  const currentSalesByMonth = new Array(12).fill(null);
+  const currentPurchasesByMonth = new Array(12).fill(null);
+
+  const now = new Date();
+  const nowYear = now.getFullYear();
+  const nowMonth = now.getMonth();
+
+  monthNames.forEach((mName, idx) => {
+    // Map idx (0 = Apr, 1 = May, etc.) to calendar year: Apr-Dec is 2026, Jan-Mar is 2027
+    const calendarYear = idx < 9 ? 2026 : 2027;
+    const calendarMonthIdx = (idx + 3) % 12; // April (3), Jan (0)
+
+    let isPastOrCurrent = false;
+    if (calendarYear < nowYear) {
+      isPastOrCurrent = true;
+    } else if (calendarYear === nowYear && calendarMonthIdx <= nowMonth) {
+      isPastOrCurrent = true;
+    }
+
+    if (isPastOrCurrent) {
+      const monthStr = `${mName} ${calendarYear}`;
+      const salesSum = sales.filter(s => s.Month === monthStr).reduce((sum, s) => sum + s.Net_Amount, 0);
+      const purchasesSum = purchases.filter(p => p.Month === monthStr).reduce((sum, p) => sum + p.Net_Amount, 0);
+      
+      currentSalesByMonth[idx] = salesSum;
+      currentPurchasesByMonth[idx] = purchasesSum;
+    }
+  });
 
   if (trendChart) {
     trendChart.destroy();
@@ -1053,22 +1087,40 @@ function renderTrendChart() {
       labels: monthLabels,
       datasets: [
         {
-          label: 'Sales (FY 2025-26)',
+          label: 'Sales (Last Year FY 25-26)',
           data: salesHist,
-          borderColor: '#10b981', // green
-          backgroundColor: 'rgba(16, 185, 129, 0.05)',
-          borderWidth: 3,
+          borderColor: 'rgba(16, 185, 129, 0.45)', // faded green
+          borderDash: [5, 5],
+          borderWidth: 2,
+          pointRadius: 2,
+          fill: false
+        },
+        {
+          label: 'Sales (Current Year FY 26-27)',
+          data: currentSalesByMonth,
+          borderColor: '#10b981', // solid green
+          backgroundColor: 'rgba(16, 185, 129, 0.04)',
+          borderWidth: 3.5,
           pointRadius: 4,
           pointBackgroundColor: '#10b981',
           tension: 0.35,
           fill: true
         },
         {
-          label: 'Purchases (FY 2025-26)',
+          label: 'Purchases (Last Year FY 25-26)',
           data: purchasesHist,
-          borderColor: '#3b82f6', // blue
-          backgroundColor: 'rgba(59, 130, 246, 0.05)',
-          borderWidth: 3,
+          borderColor: 'rgba(59, 130, 246, 0.45)', // faded blue
+          borderDash: [5, 5],
+          borderWidth: 2,
+          pointRadius: 2,
+          fill: false
+        },
+        {
+          label: 'Purchases (Current Year FY 26-27)',
+          data: currentPurchasesByMonth,
+          borderColor: '#3b82f6', // solid blue
+          backgroundColor: 'rgba(59, 130, 246, 0.04)',
+          borderWidth: 3.5,
           pointRadius: 4,
           pointBackgroundColor: '#3b82f6',
           tension: 0.35,
@@ -1083,9 +1135,9 @@ function renderTrendChart() {
         legend: {
           position: 'top',
           labels: {
-            font: { family: 'Inter', size: 12, weight: '500' },
-            boxWidth: 15,
-            padding: 15
+            font: { family: 'Inter', size: 11, weight: '500' },
+            boxWidth: 12,
+            padding: 12
           }
         },
         tooltip: {
@@ -1098,7 +1150,7 @@ function renderTrendChart() {
             label: function(context) {
               let label = context.dataset.label.split(' ')[0] || '';
               if (label) {
-                label += ': ';
+                label += ' ' + (context.dataset.label.includes('Current') ? '(26-27)' : '(25-26)') + ': ';
               }
               if (context.parsed.y !== null) {
                 label += rupeeFormatter.format(context.parsed.y);
@@ -1145,24 +1197,55 @@ function renderStatisticsTab() {
   ];
   
   const shortMonthLabels = [
-    "Apr 25", "May 25", "Jun 25", "Jul 25", "Aug 25", "Sep 25",
-    "Oct 25", "Nov 25", "Dec 25", "Jan 26", "Feb 26", "Mar 26"
+    "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"
   ];
 
+  // Extract 12 months historical (FY 2025-2026)
   const salesHist = historicalData.gst_summary.output.map(r => r.Exempted + r.Taxable);
   const purchasesHist = historicalData.gst_summary.input.map(r => r.Exempted + r.Taxable);
 
-  // 1. Calculate Metric Summaries
-  const totalSalesVal = salesHist.reduce((a,b) => a+b, 0);
-  const totalPurVal = purchasesHist.reduce((a,b) => a+b, 0);
-  const avgSalesVal = Math.round(totalSalesVal / 12);
-  const avgPurVal = Math.round(totalPurVal / 12);
+  // Group current year sales & purchases (FY 2026-2027) dynamically
+  const currentSalesByMonth = new Array(12).fill(null);
+  const currentPurchasesByMonth = new Array(12).fill(null);
 
-  // Find Peak Month
+  const now = new Date();
+  const nowYear = now.getFullYear();
+  const nowMonth = now.getMonth();
+
+  monthNames.forEach((mName, idx) => {
+    const calendarYear = idx < 9 ? 2026 : 2027;
+    const calendarMonthIdx = (idx + 3) % 12;
+
+    let isPastOrCurrent = false;
+    if (calendarYear < nowYear) {
+      isPastOrCurrent = true;
+    } else if (calendarYear === nowYear && calendarMonthIdx <= nowMonth) {
+      isPastOrCurrent = true;
+    }
+
+    if (isPastOrCurrent) {
+      const monthStr = `${mName} ${calendarYear}`;
+      const salesSum = sales.filter(s => s.Month === monthStr).reduce((sum, s) => sum + s.Net_Amount, 0);
+      const purchasesSum = purchases.filter(p => p.Month === monthStr).reduce((sum, p) => sum + p.Net_Amount, 0);
+      
+      currentSalesByMonth[idx] = salesSum;
+      currentPurchasesByMonth[idx] = purchasesSum;
+    }
+  });
+
+  // Calculate Metric Summaries using active current year data
+  const totalSalesVal = currentSalesByMonth.reduce((a,b) => a ? a+b : b, 0) || 0;
+  const totalPurVal = currentPurchasesByMonth.reduce((a,b) => a ? a+b : b, 0) || 0;
+  
+  const activeMonthsCount = Math.max(1, currentSalesByMonth.filter((v, i) => v !== null || currentPurchasesByMonth[i] !== null).length);
+  const avgSalesVal = Math.round(totalSalesVal / activeMonthsCount);
+  const avgPurVal = Math.round(totalPurVal / activeMonthsCount);
+
+  // Find Peak Month in current year
   let maxSales = 0;
   let maxMonthIdx = 0;
-  salesHist.forEach((val, idx) => {
-    if (val > maxSales) {
+  currentSalesByMonth.forEach((val, idx) => {
+    if (val !== null && val > maxSales) {
       maxSales = val;
       maxMonthIdx = idx;
     }
@@ -1171,9 +1254,9 @@ function renderStatisticsTab() {
   // Update UI cards
   document.getElementById('statsAvgSales').innerText = formatRupee(avgSalesVal);
   document.getElementById('statsAvgPurchases').innerText = formatRupee(avgPurVal);
-  document.getElementById('statsPeakMonth').innerText = `${monthNames[maxMonthIdx]} (₹${(maxSales/100000).toFixed(1)}L)`;
+  document.getElementById('statsPeakMonth').innerText = `${monthNames[maxMonthIdx]} 2026 (₹${(maxSales/100000).toFixed(1)}L)`;
 
-  // 2. Bar Chart: Sales vs Purchases Comparison
+  // 2. Bar Chart: Sales vs Purchases Comparison (Shows last year vs this year side-by-side)
   const barCtx = document.getElementById('statsBarChart');
   if (barCtx) {
     if (statsBarChart) statsBarChart.destroy();
@@ -1183,20 +1266,36 @@ function renderStatisticsTab() {
         labels: shortMonthLabels,
         datasets: [
           {
-            label: 'Sales Revenue',
+            label: 'Sales (Last Year)',
             data: salesHist,
-            backgroundColor: 'rgba(16, 185, 129, 0.75)', // green
-            borderColor: '#10b981',
+            backgroundColor: 'rgba(16, 185, 129, 0.3)', // faded green
+            borderColor: 'rgba(16, 185, 129, 0.5)',
             borderWidth: 1,
-            borderRadius: 4
+            borderRadius: 3
           },
           {
-            label: 'Purchase Expenses',
+            label: 'Sales (Current Year)',
+            data: currentSalesByMonth,
+            backgroundColor: '#10b981', // solid green
+            borderColor: '#10b981',
+            borderWidth: 1,
+            borderRadius: 3
+          },
+          {
+            label: 'Purchases (Last Year)',
             data: purchasesHist,
-            backgroundColor: 'rgba(59, 130, 246, 0.75)', // blue
+            backgroundColor: 'rgba(59, 130, 246, 0.3)', // faded blue
+            borderColor: 'rgba(59, 130, 246, 0.5)',
+            borderWidth: 1,
+            borderRadius: 3
+          },
+          {
+            label: 'Purchases (Current Year)',
+            data: currentPurchasesByMonth,
+            backgroundColor: '#3b82f6', // solid blue
             borderColor: '#3b82f6',
             borderWidth: 1,
-            borderRadius: 4
+            borderRadius: 3
           }
         ]
       },
@@ -1204,7 +1303,7 @@ function renderStatisticsTab() {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: 'top', labels: { font: { family: 'Inter', size: 11 } } },
+          legend: { position: 'top', labels: { font: { family: 'Inter', size: 10 } } },
           tooltip: {
             callbacks: {
               label: function(context) {
@@ -1227,16 +1326,23 @@ function renderStatisticsTab() {
     });
   }
 
-  // 3. Radar Chart: Seasonal Demand
+  // 3. Radar Chart: Seasonal Demand Comparison
   // Seasons: Kharif (Jun-Oct), Rabi (Nov-Feb), Summer (Mar-May)
-  const kharifSales = salesHist.slice(2, 7).reduce((a,b) => a+b, 0);
-  const kharifPurchases = purchasesHist.slice(2, 7).reduce((a,b) => a+b, 0);
+  // Last Year values
+  const lastYearKharifSales = salesHist.slice(2, 7).reduce((a,b) => a+b, 0);
+  const lastYearKharifPurchases = purchasesHist.slice(2, 7).reduce((a,b) => a+b, 0);
+  const lastYearRabiSales = salesHist.slice(7, 11).reduce((a,b) => a+b, 0);
+  const lastYearRabiPurchases = purchasesHist.slice(7, 11).reduce((a,b) => a+b, 0);
+  const lastYearSummerSales = salesHist[11] + salesHist[0] + salesHist[1];
+  const lastYearSummerPurchases = purchasesHist[11] + purchasesHist[0] + purchasesHist[1];
 
-  const rabiSales = salesHist.slice(7, 11).reduce((a,b) => a+b, 0);
-  const rabiPurchases = purchasesHist.slice(7, 11).reduce((a,b) => a+b, 0);
-
-  const summerSales = salesHist[11] + salesHist[0] + salesHist[1];
-  const summerPurchases = purchasesHist[11] + purchasesHist[0] + purchasesHist[1];
+  // Current Year values
+  const currentKharifSales = currentSalesByMonth.slice(2, 7).reduce((a,b) => a + (b || 0), 0);
+  const currentKharifPurchases = currentPurchasesByMonth.slice(2, 7).reduce((a,b) => a + (b || 0), 0);
+  const currentRabiSales = currentSalesByMonth.slice(7, 11).reduce((a,b) => a + (b || 0), 0);
+  const currentRabiPurchases = currentPurchasesByMonth.slice(7, 11).reduce((a,b) => a + (b || 0), 0);
+  const currentSummerSales = (currentSalesByMonth[11] || 0) + (currentSalesByMonth[0] || 0) + (currentSalesByMonth[1] || 0);
+  const currentSummerPurchases = (currentPurchasesByMonth[11] || 0) + (currentPurchasesByMonth[0] || 0) + (currentPurchasesByMonth[1] || 0);
 
   const radarCtx = document.getElementById('statsRadarChart');
   if (radarCtx) {
