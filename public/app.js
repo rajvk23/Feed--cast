@@ -12,6 +12,7 @@ let inventory = [
 ];
 
 // Currency Formatter (Indian style: ₹14,78,568)
+let historicalData = null;
 const rupeeFormatter = new Intl.NumberFormat('en-IN', {
   style: 'currency',
   currency: 'INR',
@@ -136,9 +137,15 @@ function setupEventListeners() {
 // Fetch Data from Backend
 async function fetchData() {
   try {
-    const res = await fetch('/api/data');
-    if (!res.ok) throw new Error('Failed to fetch data');
-    const data = await res.json();
+    const [resData, resHist] = await Promise.all([
+      fetch('/api/data'),
+      fetch('/api/historical')
+    ]);
+    
+    if (!resData.ok || !resHist.ok) throw new Error('Failed to fetch data');
+    
+    const data = await resData.json();
+    historicalData = await resHist.json();
     
     sales = data.sales || [];
     purchases = data.purchases || [];
@@ -360,6 +367,9 @@ function renderDashboard() {
       inventoryBody.appendChild(row);
     });
   }
+
+  // Render YoY & MoM Detailed Analysis
+  renderYoYMoM();
 }
 
 // Render Retailers List
@@ -447,17 +457,76 @@ window.triggerRetailerSale = function(retailerName) {
 
 // Calculate and Render AI Prediction
 function calculatePrediction() {
-  const kharifRate = 0.125; // +12.5% automated
-  const bufferRate = 0.10;  // +10% automated
+  let salesGrowthRate = 0.125; // Fallback +12.5%
+  let purchasesGrowthRate = 0.10; // Fallback +10%
+  const bufferRate = 0.10;  // +10% safety buffer
 
-  // May 2026 Sales Baseline (Summer Low demand) = ₹14,78,568
-  const baseMaySales = 1478568;
+  let predictedSales = 1663389;
+  let predictedPurchases = 1663389;
 
-  // Calculation
-  const projectedJuneDemand = baseMaySales * (1 + kharifRate);
-  const recommendedJuneOrder = projectedJuneDemand * (1 + bufferRate);
+  // Calculate dynamic growth rates from last year (FY 2025-2026) using RAST
+  if (historicalData) {
+    const selectedMonth = 'June 2026';
+    const [monthName, yearStr] = selectedMonth.split(' ');
+    const year = parseInt(yearStr);
+
+    const monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    const monthIdx = monthNames.indexOf(monthName);
+    let prevMonthIdx = monthIdx - 1;
+    let prevYear = year;
+    if (prevMonthIdx < 0) {
+      prevMonthIdx = 11;
+      prevYear = year - 1;
+    }
+    const prevMonthName = monthNames[prevMonthIdx];
+
+    const histInput = historicalData.gst_summary.input;
+    const histOutput = historicalData.gst_summary.output;
+
+    const histSales = histOutput.map(r => r.Exempted + r.Taxable);
+    const histPurchases = histInput.map(r => r.Exempted + r.Taxable);
+
+    const avgSales = histSales.reduce((a,b) => a+b, 0) / 12;
+    const avgPurchases = histPurchases.reduce((a,b) => a+b, 0) / 12;
+
+    const salesSeasonalIndex = histSales[monthIdx] / avgSales;
+    const purchasesSeasonalIndex = histPurchases[monthIdx] / avgPurchases;
+
+    // May baseline comparison (May is index 1: April=0, May=1)
+    const baseMaySales2025 = histSales[1];
+    const baseMayPurchases2025 = histPurchases[1];
+
+    const baseMaySales2026 = 1478568;
+    const baseMayPurchases2026 = 1682045;
+
+    const salesGrowthTrend = baseMaySales2026 / baseMaySales2025;
+    const purchasesGrowthTrend = baseMayPurchases2026 / baseMayPurchases2025;
+
+    predictedSales = avgSales * salesSeasonalIndex * salesGrowthTrend;
+    predictedPurchases = avgPurchases * purchasesSeasonalIndex * purchasesGrowthTrend;
+
+    salesGrowthRate = (predictedSales - baseMaySales2026) / baseMaySales2026;
+    purchasesGrowthRate = (predictedPurchases - baseMayPurchases2026) / baseMayPurchases2026;
+
+    // Populate dynamic texts in the formulas
+    const sIndexEl = document.getElementById('salesSeasonalIndexText');
+    const pIndexEl = document.getElementById('purchasesSeasonalIndexText');
+    const trendEl = document.getElementById('yoyGrowthTrendText');
+    
+    if (sIndexEl && pIndexEl && trendEl) {
+      sIndexEl.innerText = `${salesSeasonalIndex.toFixed(2)} (${monthName} Index)`;
+      pIndexEl.innerText = `${purchasesSeasonalIndex.toFixed(2)} (${monthName} Index)`;
+      trendEl.innerText = `Sales: +${((salesGrowthTrend - 1) * 100).toFixed(1)}% | Purchases: +${((purchasesGrowthTrend - 1) * 100).toFixed(1)}%`;
+    }
+  }
 
   // Update UI values
+  const projectedJuneDemand = Math.round(predictedSales);
+  const recommendedJuneOrder = Math.round(predictedPurchases * (1 + bufferRate));
+
   document.getElementById('predDemand').innerText = formatRupee(projectedJuneDemand);
   document.getElementById('predOrder').innerText = formatRupee(recommendedJuneOrder);
   
@@ -494,8 +563,8 @@ function calculatePrediction() {
   const mayCounterBaseline = 858762;
   const mayRetailerBaseline = baseMaySales - mayCounterBaseline;
 
-  const juneCounterPred = mayCounterBaseline * (1 + kharifRate);
-  const juneRetailerPred = mayRetailerBaseline * (1 + kharifRate);
+  const juneCounterPred = mayCounterBaseline * (1 + salesGrowthRate);
+  const juneRetailerPred = mayRetailerBaseline * (1 + salesGrowthRate);
 
   // Calculate recorded sales for June 2026
   const juneSales = sales.filter(s => s.Month === 'June 2026');
@@ -837,3 +906,121 @@ async function handlePurchaseSubmit(e) {
     submitButton.innerText = 'Save Supplier Purchase';
   }
 }
+
+// Render YoY & MoM detailed comparison with pictorial progress stats
+function renderYoYMoM() {
+  if (!historicalData) return;
+
+  const selectedMonth = dashboardMonthSelect.value;
+  const yoyMomSec = document.getElementById('yoyMomSection');
+  if (!yoyMomSec) return;
+
+  if (selectedMonth === 'All Time') {
+    yoyMomSec.style.display = 'none';
+    return;
+  }
+  yoyMomSec.style.display = 'block';
+
+  const [monthName, yearStr] = selectedMonth.split(' ');
+  const year = parseInt(yearStr);
+
+  // 1. Current Month values
+  const currentSales = sales.filter(s => s.Month === selectedMonth).reduce((sum, s) => sum + s.Net_Amount, 0);
+  const currentPurchases = purchases.filter(p => p.Month === selectedMonth).reduce((sum, p) => sum + p.Net_Amount, 0);
+
+  // 2. Previous Month values
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  const monthIdx = monthNames.indexOf(monthName);
+  let prevMonthIdx = monthIdx - 1;
+  let prevYear = year;
+  if (prevMonthIdx < 0) {
+    prevMonthIdx = 11;
+    prevYear = year - 1;
+  }
+  const prevMonthName = monthNames[prevMonthIdx];
+  const prevMonthStr = `${prevMonthName} ${prevYear}`;
+
+  const prevSales = sales.filter(s => s.Month === prevMonthStr).reduce((sum, s) => sum + s.Net_Amount, 0);
+  const prevPurchases = purchases.filter(p => p.Month === prevMonthStr).reduce((sum, p) => sum + p.Net_Amount, 0);
+
+  // 3. Previous Year Current Month values
+  function toHistKey(mName, yVal) {
+    const abbr = mName.substring(0, 3);
+    return `${abbr} - ${yVal}`;
+  }
+  const targetKeyPrevYear = toHistKey(monthName, year - 1);
+  const prevKeyPrevYear = toHistKey(prevMonthName, prevYear - 1);
+
+  const histInput = historicalData.gst_summary.input;
+  const histOutput = historicalData.gst_summary.output;
+
+  const prevYearSalesRec = histOutput.find(r => r["Month-Year"] === targetKeyPrevYear);
+  const prevYearSales = prevYearSalesRec ? (prevYearSalesRec.Exempted + prevYearSalesRec.Taxable) : 0;
+
+  const prevYearPurRec = histInput.find(r => r["Month-Year"] === targetKeyPrevYear);
+  const prevYearPurchases = prevYearPurRec ? (prevYearPurRec.Exempted + prevYearPurRec.Taxable) : 0;
+
+  // 4. Update Labels
+  document.getElementById('salesYoYLabelCurrent').innerText = `Sales (${selectedMonth})`;
+  document.getElementById('salesYoYLabelPrevious').innerText = `Sales (${monthName} ${year - 1})`;
+  document.getElementById('purchasesYoYLabelCurrent').innerText = `Purchases (${selectedMonth})`;
+  document.getElementById('purchasesYoYLabelPrevious').innerText = `Purchases (${monthName} ${year - 1})`;
+
+  document.getElementById('salesMoMLabelCurrent').innerText = `Sales (${selectedMonth})`;
+  document.getElementById('salesMoMLabelPrevious').innerText = `Sales (${prevMonthStr})`;
+  document.getElementById('purchasesMoMLabelCurrent').innerText = `Purchases (${selectedMonth})`;
+  document.getElementById('purchasesMoMLabelPrevious').innerText = `Purchases (${prevMonthStr})`;
+
+  // 5. Update Values
+  document.getElementById('salesYoYCurrent').innerText = formatRupee(currentSales);
+  document.getElementById('salesYoYPrevious').innerText = formatRupee(prevYearSales);
+  document.getElementById('purchasesYoYCurrent').innerText = formatRupee(currentPurchases);
+  document.getElementById('purchasesYoYPrevious').innerText = formatRupee(prevYearPurchases);
+
+  document.getElementById('salesMoMCurrent').innerText = formatRupee(currentSales);
+  document.getElementById('salesMoMPrevious').innerText = formatRupee(prevSales);
+  document.getElementById('purchasesMoMCurrent').innerText = formatRupee(currentPurchases);
+  document.getElementById('purchasesMoMPrevious').innerText = formatRupee(prevPurchases);
+
+  // 6. Calculate Growth Rates & Update UI
+  function updateComparison(current, previous, rateElId, barElId) {
+    let rateText = 'N/A';
+    let percent = 0;
+    
+    if (previous > 0) {
+      const growth = ((current - previous) / previous) * 100;
+      const sign = growth >= 0 ? '+' : '';
+      rateText = `${sign}${growth.toFixed(1)}%`;
+      percent = Math.min(100, Math.round((current / previous) * 100));
+      
+      const rateEl = document.getElementById(rateElId);
+      rateEl.innerText = `${rateText} YoY`;
+      if (rateElId.includes('MoM')) {
+        rateEl.innerText = `${rateText} MoM`;
+      }
+      
+      if (growth >= 0) {
+        rateEl.style.color = 'var(--success-color)';
+        rateEl.style.fontWeight = '700';
+      } else {
+        rateEl.style.color = '#dc3545'; // red
+        rateEl.style.fontWeight = '700';
+      }
+    } else {
+      document.getElementById(rateElId).innerText = rateText;
+      document.getElementById(rateElId).style.color = 'var(--text-muted)';
+    }
+    
+    document.getElementById(barElId).style.width = `${percent}%`;
+  }
+
+  updateComparison(currentSales, prevYearSales, 'salesYoYRate', 'salesYoYBar');
+  updateComparison(currentPurchases, prevYearPurchases, 'purchasesYoYRate', 'purchasesYoYBar');
+  
+  updateComparison(currentSales, prevSales, 'salesMoMRate', 'salesMoMBar');
+  updateComparison(currentPurchases, prevPurchases, 'purchasesMoMRate', 'purchasesMoMBar');
+}
+
