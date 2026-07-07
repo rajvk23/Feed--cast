@@ -1353,19 +1353,37 @@ function renderStatisticsTab() {
         labels: ['Kharif Season (Jun-Oct)', 'Rabi Season (Nov-Feb)', 'Summer Season (Mar-May)'],
         datasets: [
           {
-            label: 'Sales Demand',
-            data: [kharifSales, rabiSales, summerSales],
+            label: 'Sales Demand (Last Year)',
+            data: [lastYearKharifSales, lastYearRabiSales, lastYearSummerSales],
+            backgroundColor: 'rgba(16, 185, 129, 0.03)',
+            borderColor: 'rgba(16, 185, 129, 0.4)',
+            borderWidth: 1.5,
+            borderDash: [3, 3],
+            pointBackgroundColor: 'rgba(16, 185, 129, 0.4)'
+          },
+          {
+            label: 'Sales Demand (Current Year)',
+            data: [currentKharifSales, currentRabiSales, currentSummerSales],
             backgroundColor: 'rgba(16, 185, 129, 0.15)',
             borderColor: '#10b981',
-            borderWidth: 2,
+            borderWidth: 2.5,
             pointBackgroundColor: '#10b981'
           },
           {
-            label: 'Purchase Expenses',
-            data: [kharifPurchases, rabiPurchases, summerPurchases],
+            label: 'Purchase Expenses (Last Year)',
+            data: [lastYearKharifPurchases, lastYearRabiPurchases, lastYearSummerPurchases],
+            backgroundColor: 'rgba(59, 130, 246, 0.03)',
+            borderColor: 'rgba(59, 130, 246, 0.4)',
+            borderWidth: 1.5,
+            borderDash: [3, 3],
+            pointBackgroundColor: 'rgba(59, 130, 246, 0.4)'
+          },
+          {
+            label: 'Purchase Expenses (Current Year)',
+            data: [currentKharifPurchases, currentRabiPurchases, currentSummerPurchases],
             backgroundColor: 'rgba(59, 130, 246, 0.15)',
             borderColor: '#3b82f6',
-            borderWidth: 2,
+            borderWidth: 2.5,
             pointBackgroundColor: '#3b82f6'
           }
         ]
