@@ -105,26 +105,30 @@ app.post('/api/sales', (req, res) => {
   });
   const newVoucher = `GS${maxVoucherNum + 1}`;
 
-  // Determine season based on month (June-Oct: Kharif, Nov-Feb: Rabi, Mar-May: Summer)
+  // Determine season based on target month
   const dateObj = new Date(dateStr);
-  const monthIndex = dateObj.getMonth(); // 0 = Jan, 5 = June, 4 = May etc.
-  let season = 'Summer (Low Demand)';
-  let monthStr = 'June 2026';
+  const monthIndex = dateObj.getMonth();
   
-  if (monthIndex >= 5 && monthIndex <= 9) {
-    season = 'Kharif (High Demand)';
-  } else if (monthIndex === 10 || monthIndex === 11 || monthIndex === 0 || monthIndex === 1) {
-    season = 'Rabi (Moderate Demand)';
-  } else {
-    season = 'Summer (Low Demand)';
-  }
-
   const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
-  if (!isNaN(dateObj.getTime())) {
+
+  let monthStr = req.body.Month;
+  if (!monthStr && !isNaN(dateObj.getTime())) {
     monthStr = `${monthNames[monthIndex]} ${dateObj.getFullYear()}`;
+  }
+
+  const targetMonthName = monthStr ? monthStr.split(' ')[0] : 'June';
+  const targetMonthIdx = monthNames.indexOf(targetMonthName);
+
+  let season = 'Summer (Low Demand)';
+  if (targetMonthIdx >= 5 && targetMonthIdx <= 9) {
+    season = 'Kharif (High Demand)';
+  } else if (targetMonthIdx === 10 || targetMonthIdx === 11 || targetMonthIdx === 0 || targetMonthIdx === 1) {
+    season = 'Rabi (Moderate Demand)';
+  } else {
+    season = 'Summer (Low Demand)';
   }
 
   const newSale = {
@@ -150,7 +154,7 @@ app.post('/api/sales', (req, res) => {
 
 // API: Post new purchase
 app.post('/api/purchases', (req, res) => {
-  const { Supplier, Date: dateStr, Invoice, Net_Amount, Type } = req.body;
+  const { Supplier, Date: dateStr, Invoice, Net_Amount, Type, Month } = req.body;
 
   if (!Supplier || !dateStr || !Invoice || isNaN(Net_Amount) || Net_Amount <= 0) {
     return res.status(400).json({ error: 'Invalid supplier, date, invoice, or purchase amount.' });
@@ -170,26 +174,30 @@ app.post('/api/purchases', (req, res) => {
   });
   const newVoucher = `GP${maxVoucherNum + 1}`;
 
-  // Determine season based on month
+  // Determine season based on target month
   const dateObj = new Date(dateStr);
   const monthIndex = dateObj.getMonth();
-  let season = 'Summer (Low Demand)';
-  let monthStr = 'June 2026';
   
-  if (monthIndex >= 5 && monthIndex <= 9) {
-    season = 'Kharif (High Demand)';
-  } else if (monthIndex === 10 || monthIndex === 11 || monthIndex === 0 || monthIndex === 1) {
-    season = 'Rabi (Moderate Demand)';
-  } else {
-    season = 'Summer (Low Demand)';
-  }
-
   const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
-  if (!isNaN(dateObj.getTime())) {
+
+  let monthStr = Month;
+  if (!monthStr && !isNaN(dateObj.getTime())) {
     monthStr = `${monthNames[monthIndex]} ${dateObj.getFullYear()}`;
+  }
+
+  const targetMonthName = monthStr ? monthStr.split(' ')[0] : 'June';
+  const targetMonthIdx = monthNames.indexOf(targetMonthName);
+
+  let season = 'Summer (Low Demand)';
+  if (targetMonthIdx >= 5 && targetMonthIdx <= 9) {
+    season = 'Kharif (High Demand)';
+  } else if (targetMonthIdx === 10 || targetMonthIdx === 11 || targetMonthIdx === 0 || targetMonthIdx === 1) {
+    season = 'Rabi (Moderate Demand)';
+  } else {
+    season = 'Summer (Low Demand)';
   }
 
   const newPurchase = {

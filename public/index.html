@@ -765,6 +765,15 @@
             <input type="date" id="purchaseDate" required class="form-input">
           </div>
 
+          <!-- Target Month for Stock -->
+          <div class="form-group">
+            <label for="purchaseTargetMonth" class="form-label">Target Inventory Month</label>
+            <select id="purchaseTargetMonth" class="form-input">
+              <!-- Dynamically populated in app.js -->
+            </select>
+            <p class="text-xs text-muted" style="margin-top: 4px;">Select which month's budget and inventory this purchase belongs to (e.g. if buying in advance for next month).</p>
+          </div>
+
           <!-- Submit Button -->
           <div class="form-actions mt-4">
             <button type="submit" class="btn btn-primary btn-block btn-lg" id="btnSubmitPurchase">

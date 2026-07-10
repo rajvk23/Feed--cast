@@ -715,22 +715,25 @@ function populateMonthDropdowns() {
   const startMonthIdx = 4; // May
   const startYear = 2026;
 
-  // We go up to the current system date's month and year
+  // We go up to 1 month ahead of the current calendar month (so they can record stock in advance!)
   const now = new Date();
   const currentYear = now.getFullYear();
   const currentMonthIdx = now.getMonth();
+  
+  const targetLimitYear = currentMonthIdx === 11 ? currentYear + 1 : currentYear;
+  const targetLimitMonth = currentMonthIdx === 11 ? 0 : currentMonthIdx + 1;
 
   // Find all unique months present in sales and purchases to make sure we don't miss anything
   const transactionMonths = new Set();
   sales.forEach(s => { if (s.Month) transactionMonths.add(s.Month); });
   purchases.forEach(p => { if (p.Month) transactionMonths.add(p.Month); });
 
-  // Generate sequence of months from May 2026 to current calendar month
+  // Generate sequence of months from May 2026 to upcoming calendar month
   const options = [];
   let y = startYear;
   let m = startMonthIdx;
 
-  while (y < currentYear || (y === currentYear && m <= currentMonthIdx)) {
+  while (y < targetLimitYear || (y === targetLimitYear && m <= targetLimitMonth)) {
     const monthStr = `${monthNames[m]} ${y}`;
     options.push(monthStr);
     
@@ -793,7 +796,31 @@ function populateMonthDropdowns() {
   } else if (options.includes(currentMonthStr)) {
     monthSelect.value = currentMonthStr;
   } else {
-    monthSelect.value = options[options.length - 1];
+    monthSelect.value = options[options.length - 2] || options[options.length - 1];
+  }
+
+  // Populate purchase form Target Inventory Month select dropdown
+  const purchaseMonthSelect = document.getElementById('purchaseTargetMonth');
+  if (purchaseMonthSelect) {
+    const prevPurchaseVal = purchaseMonthSelect.value;
+    purchaseMonthSelect.innerHTML = '';
+    
+    // Default option to automatically detect month from purchase date field
+    const optAuto = document.createElement('option');
+    optAuto.value = '';
+    optAuto.innerText = 'Auto (Detect from Date)';
+    purchaseMonthSelect.appendChild(optAuto);
+    
+    options.forEach(mStr => {
+      const opt = document.createElement('option');
+      opt.value = mStr;
+      opt.innerText = mStr;
+      purchaseMonthSelect.appendChild(opt);
+    });
+    
+    if (prevPurchaseVal) {
+      purchaseMonthSelect.value = prevPurchaseVal;
+    }
   }
 }
 
@@ -1034,6 +1061,8 @@ async function handlePurchaseSubmit(e) {
   submitButton.innerText = 'Saving...';
 
   try {
+    const targetMonth = document.getElementById('purchaseTargetMonth').value;
+
     const response = await fetch('/api/purchases', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -1042,7 +1071,8 @@ async function handlePurchaseSubmit(e) {
         Date: date,
         Invoice: invoice,
         Net_Amount: amount,
-        Type: type
+        Type: type,
+        Month: targetMonth || undefined
       })
     });
 
