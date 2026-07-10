@@ -70,6 +70,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Fetch Data
   initHeaderWidgets();
+  // Auto-refresh date & weather widgets every 10 minutes
+  setInterval(initHeaderWidgets, 10 * 60 * 1000);
   fetchData();
 
   // Setup Event Listeners
