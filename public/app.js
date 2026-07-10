@@ -734,6 +734,19 @@ function calculatePrediction() {
       retailerPaceEl.style.color = 'var(--text-muted)';
     }
   }
+
+  // Save calculated prediction to MongoDB asynchronously
+  fetch('/api/predictions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      baselineMonth: baselineMonthStr,
+      predictedMonth: predictedMonthStr,
+      predictedSales: projectedDemand,
+      recommendedOrder: recommendedOrder,
+      excessStock: Math.round(excessStock)
+    })
+  }).catch(err => console.error('Error logging prediction to database:', err));
 }
 
 // Dynamically populate month options in select dropdowns based on calendar progress

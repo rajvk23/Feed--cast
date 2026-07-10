@@ -337,6 +337,36 @@ app.delete('/api/purchases/:voucher', async (req, res) => {
   }
 });
 
+// API: Post or update a calculated prediction
+app.post('/api/predictions', async (req, res) => {
+  const { baselineMonth, predictedMonth, predictedSales, recommendedOrder, excessStock } = req.body;
+  if (!baselineMonth || !predictedMonth) {
+    return res.status(400).json({ error: 'Missing baseline or predicted month.' });
+  }
+  try {
+    if (db) {
+      // Upsert based on predictedMonth
+      await db.collection('predictions').updateOne(
+        { predictedMonth },
+        { 
+          $set: { 
+            baselineMonth, 
+            predictedSales: parseFloat(predictedSales), 
+            recommendedOrder: parseFloat(recommendedOrder), 
+            excessStock: parseFloat(excessStock),
+            updatedAt: new Date()
+          } 
+        },
+        { upsert: true }
+      );
+    }
+    res.json({ message: 'Prediction stored successfully.' });
+  } catch (err) {
+    console.error('Error saving prediction:', err);
+    res.status(500).json({ error: 'Failed to save prediction.' });
+  }
+});
+
 // Serve frontend fallback to index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
