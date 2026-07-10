@@ -96,15 +96,37 @@ h1, h2, h3, h4 {
   font-weight: 400;
 }
 
-.header-time {
-  background-color: rgba(255, 255, 255, 0.15);
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-sm);
+.header-widgets {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.widget-pill {
+  background-color: rgba(255, 255, 255, 0.12);
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-md);
   font-family: 'Outfit', sans-serif;
-  font-weight: 600;
-  font-size: 0.95rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--accent-color);
+  font-weight: 500;
+  font-size: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-white);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.widget-pill:hover {
+  background-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.widget-icon {
+  width: 14px;
+  height: 14px;
+  opacity: 0.9;
 }
 
 /* App Main Container */

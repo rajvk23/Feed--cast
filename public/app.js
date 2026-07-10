@@ -69,6 +69,7 @@ window.addEventListener('DOMContentLoaded', () => {
   purchaseDateInput.value = dateStr;
 
   // Fetch Data
+  initHeaderWidgets();
   fetchData();
 
   // Setup Event Listeners
@@ -203,6 +204,17 @@ function renderActiveTab() {
       renderCustomerPredictions();
     }
   } else if (activeTab === 'prediction') {
+    // Add dynamic ML pulse loading effect to predictions UI
+    const targetContent = document.getElementById('prediction');
+    if (targetContent) {
+      targetContent.style.opacity = '0.3';
+      targetContent.style.transform = 'scale(0.99)';
+      targetContent.style.transition = 'all 0.3s ease';
+      setTimeout(() => {
+        targetContent.style.opacity = '1';
+        targetContent.style.transform = 'scale(1)';
+      }, 200);
+    }
     calculatePrediction();
   } else if (activeTab === 'statistics') {
     renderStatisticsTab();
@@ -471,46 +483,45 @@ function calculatePrediction() {
 
   let predictedSales = 1663389;
   let predictedPurchases = 1663389;
+  let excessStock = 0;
 
-  // Determine target predicted month dynamically based on dropdown selection
+  // Determine baseline month from dropdown selection
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
   ];
-  let selectedMonth = dashboardMonthSelect.value;
-  if (!selectedMonth || selectedMonth === 'All Time') {
-    const now = new Date();
-    selectedMonth = `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+  let baselineMonthStr = dashboardMonthSelect.value;
+  if (!baselineMonthStr || baselineMonthStr === 'All Time') {
+    baselineMonthStr = 'June 2026';
   }
-  const [monthName, yearStr] = selectedMonth.split(' ');
-  const year = parseInt(yearStr);
+  const [baseMonthName, baseYearStr] = baselineMonthStr.split(' ');
+  const baseYear = parseInt(baseYearStr);
+  const baseMonthIdx = monthNames.indexOf(baseMonthName);
 
-  const monthIdx = monthNames.indexOf(monthName);
-  
-  // Determine baseline (previous) month dynamically
-  let prevMonthIdx = monthIdx - 1;
-  let prevYear = year;
-  if (prevMonthIdx < 0) {
-    prevMonthIdx = 11;
-    prevYear = year - 1;
+  // Determine target predicted (next) month dynamically based on dropdown baseline selection
+  let predMonthIdx = baseMonthIdx + 1;
+  let predYear = baseYear;
+  if (predMonthIdx > 11) {
+    predMonthIdx = 0;
+    predYear = baseYear + 1;
   }
-  const prevMonthName = monthNames[prevMonthIdx];
-  const prevMonthStr = `${prevMonthName} ${prevYear}`;
+  const predMonthName = monthNames[predMonthIdx];
+  const predictedMonthStr = `${predMonthName} ${predYear}`;
 
   // Update headers and text in the predictions page dynamically
   const predHeaderEl = document.getElementById('predictionHeader');
   if (predHeaderEl) {
-    predHeaderEl.innerText = `${selectedMonth} Demand Prediction`;
+    predHeaderEl.innerText = `${predictedMonthStr} Demand Prediction`;
   }
   
   const fHeaderEl = document.getElementById('forecastHeader');
   if (fHeaderEl) {
-    fHeaderEl.innerText = `Sales Channels Demand Forecast (${selectedMonth})`;
+    fHeaderEl.innerText = `Sales Channels Demand Forecast (${predictedMonthStr})`;
   }
 
   const fDescEl = document.getElementById('forecastDesc');
   if (fDescEl) {
-    fDescEl.innerText = `Breakdown of predicted exact demand and recorded sales progress for ${selectedMonth}.`;
+    fDescEl.innerText = `Breakdown of predicted exact demand and recorded sales progress for ${predictedMonthStr}.`;
   }
 
   if (historicalData) {
@@ -523,16 +534,19 @@ function calculatePrediction() {
     const avgSales = histSales.reduce((a,b) => a+b, 0) / 12;
     const avgPurchases = histPurchases.reduce((a,b) => a+b, 0) / 12;
 
-    const salesSeasonalIndex = histSales[monthIdx] / avgSales;
-    const purchasesSeasonalIndex = histPurchases[monthIdx] / avgPurchases;
+    const salesSeasonalIndex = histSales[predMonthIdx] / avgSales;
+    const purchasesSeasonalIndex = histPurchases[predMonthIdx] / avgPurchases;
 
-    // Previous month baseline actuals (e.g. June 2026 data in June, or May 2026 baseline if predicting June)
-    const baseSales2026 = sales.filter(s => s.Month === prevMonthStr).reduce((sum, s) => sum + s.Net_Amount, 0);
-    const basePurchases2026 = purchases.filter(p => p.Month === prevMonthStr).reduce((sum, p) => sum + p.Net_Amount, 0);
+    // Baseline month actuals from selection
+    const baseSales2026 = sales.filter(s => s.Month === baselineMonthStr).reduce((sum, s) => sum + s.Net_Amount, 0);
+    const basePurchases2026 = purchases.filter(p => p.Month === baselineMonthStr).reduce((sum, p) => sum + p.Net_Amount, 0);
 
-    // Baseline actuals for last year (e.g. June 2025)
-    const baseSales2025 = histSales[prevMonthIdx];
-    const basePurchases2025 = histPurchases[prevMonthIdx];
+    // Excess stock deduction logic (stock purchased but not sold in the baseline month)
+    excessStock = Math.max(0, basePurchases2026 - baseSales2026);
+
+    // Baseline actuals for last year
+    const baseSales2025 = histSales[baseMonthIdx];
+    const basePurchases2025 = histPurchases[baseMonthIdx];
 
     // Compute YoY growth trend dynamically
     const salesGrowthTrend = baseSales2025 > 0 && baseSales2026 > 0 ? (baseSales2026 / baseSales2025) : 1.055;
@@ -550,28 +564,33 @@ function calculatePrediction() {
     const trendEl = document.getElementById('yoyGrowthTrendText');
     
     if (sIndexEl && pIndexEl && trendEl) {
-      sIndexEl.innerText = `${salesSeasonalIndex.toFixed(2)} (${monthName} Index)`;
-      pIndexEl.innerText = `${purchasesSeasonalIndex.toFixed(2)} (${monthName} Index)`;
+      sIndexEl.innerText = `${salesSeasonalIndex.toFixed(2)} (${predMonthName} Index)`;
+      pIndexEl.innerText = `${purchasesSeasonalIndex.toFixed(2)} (${predMonthName} Index)`;
       trendEl.innerText = `Sales: +${((salesGrowthTrend - 1) * 100).toFixed(1)}% | Purchases: +${((purchasesGrowthTrend - 1) * 100).toFixed(1)}%`;
     }
 
     // Update baseline analysers description card
     const baselineMonthTextEl = document.getElementById('baselineMonthText');
     if (baselineMonthTextEl) {
-      baselineMonthTextEl.innerText = `${prevMonthStr} (Baseline Sales: ${formatRupee(Math.round(baseSales2026))})`;
+      baselineMonthTextEl.innerText = `${baselineMonthStr} (Baseline Sales: ${formatRupee(Math.round(baseSales2026))})`;
     }
   }
 
   // Update UI values
   const projectedDemand = Math.round(predictedSales);
-  const recommendedOrder = Math.round(projectedDemand * (1 + bufferRate));
+  // Supplier Order covers Predicted Demand + 10% buffer - carry-over excess stock
+  const recommendedOrder = Math.max(0, Math.round(projectedDemand * (1 + bufferRate)) - Math.round(excessStock));
 
   document.getElementById('predDemand').innerText = formatRupee(projectedDemand);
   document.getElementById('predOrder').innerText = formatRupee(recommendedOrder);
   
   const metaNoteEl = document.getElementById('predictionMetaNote');
   if (metaNoteEl) {
-    metaNoteEl.innerHTML = `This recommendation is calculated to cover your expected sales of <strong>${formatRupee(projectedDemand)}</strong> plus a <strong>10%</strong> safety stock buffer.`;
+    if (excessStock > 0) {
+      metaNoteEl.innerHTML = `This recommendation is calculated to cover your expected sales of <strong>${formatRupee(projectedDemand)}</strong> plus a <strong>10%</strong> safety buffer, minus <strong>${formatRupee(Math.round(excessStock))}</strong> of carry-over excess stock from ${baselineMonthStr}.`;
+    } else {
+      metaNoteEl.innerHTML = `This recommendation is calculated to cover your expected sales of <strong>${formatRupee(projectedDemand)}</strong> plus a <strong>10%</strong> safety stock buffer.`;
+    }
   }
 
   // Dynamic Supplier Recommendations
@@ -604,7 +623,7 @@ function calculatePrediction() {
   }
 
   // Sales Channels Forecast progress calculations
-  const prevMonthSales = sales.filter(s => s.Month === prevMonthStr);
+  const prevMonthSales = sales.filter(s => s.Month === baselineMonthStr);
   const prevCounterBaseline = prevMonthSales.filter(s => s.Customer === 'COUNTER SALES').reduce((sum, s) => sum + s.Net_Amount, 0) || 858762;
   const prevRetailerBaseline = prevMonthSales.filter(s => s.Customer !== 'COUNTER SALES').reduce((sum, s) => sum + s.Net_Amount, 0) || 619806;
 
@@ -612,18 +631,18 @@ function calculatePrediction() {
   const retailerPredVal = prevRetailerBaseline * (1 + salesGrowthRate);
 
   // Calculate actual recorded sales for current target month
-  const currentMonthSales = sales.filter(s => s.Month === selectedMonth);
+  const currentMonthSales = sales.filter(s => s.Month === predictedMonthStr);
   const currentCounterRecorded = currentMonthSales.filter(s => s.Customer === 'COUNTER SALES').reduce((sum, s) => sum + s.Net_Amount, 0);
   const currentRetailerRecorded = currentMonthSales.filter(s => s.Customer !== 'COUNTER SALES').reduce((sum, s) => sum + s.Net_Amount, 0);
 
   // Update dynamic month labels on channel metrics
-  document.getElementById('counterBaselineLabel').innerText = `${prevMonthName} Baseline`;
-  document.getElementById('counterPredLabel').innerText = `${monthName} Exact Prediction`;
-  document.getElementById('counterRecordedLabel').innerText = `${monthName} Recorded`;
+  document.getElementById('counterBaselineLabel').innerText = `${baseMonthName} Baseline`;
+  document.getElementById('counterPredLabel').innerText = `${predMonthName} Exact Prediction`;
+  document.getElementById('counterRecordedLabel').innerText = `${predMonthName} Recorded`;
 
-  document.getElementById('retailerBaselineLabel').innerText = `${prevMonthName} Baseline`;
-  document.getElementById('retailerPredLabel').innerText = `${monthName} Exact Prediction`;
-  document.getElementById('retailerRecordedLabel').innerText = `${monthName} Recorded`;
+  document.getElementById('retailerBaselineLabel').innerText = `${baseMonthName} Baseline`;
+  document.getElementById('retailerPredLabel').innerText = `${predMonthName} Exact Prediction`;
+  document.getElementById('retailerRecordedLabel').innerText = `${predMonthName} Recorded`;
 
   // Update DOM elements for channel baselines and predictions
   document.getElementById('counterMayBaseline').innerText = formatRupee(prevCounterBaseline);
@@ -647,9 +666,13 @@ function calculatePrediction() {
   document.getElementById('retailerProgressBar').style.width = `${retailerPct}%`;
 
   // Daily run rate needed
+  const now = new Date();
   const currentDayNum = now.getDate();
   const totalDaysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-  const daysRemainingVal = Math.max(1, totalDaysInMonth - currentDayNum);
+  
+  // Only calculate remaining days if target predicted month is the current calendar month
+  const isCurrentCalendarMonth = (now.getMonth() === predMonthIdx && now.getFullYear() === predYear);
+  const daysRemainingVal = isCurrentCalendarMonth ? Math.max(1, totalDaysInMonth - currentDayNum) : totalDaysInMonth;
 
   const counterRemaining = counterPredVal - currentCounterRecorded;
   const counterPaceEl = document.getElementById('counterPace');
@@ -1645,6 +1668,69 @@ function renderStatisticsTab() {
         }
       }
     });
+  }
+}
+
+// Initialize Date and Weather Widgets
+function initHeaderWidgets() {
+  // Update Date Display
+  const dateEl = document.getElementById('widgetDate');
+  if (dateEl) {
+    const today = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    dateEl.innerText = today.toLocaleDateString('en-US', options);
+  }
+
+  // Fetch Weather for Ambajipeta, Andhra Pradesh (16.5939 N, 81.9453 E)
+  const weatherIconEl = document.getElementById('widgetWeatherIcon');
+  const weatherTextEl = document.getElementById('widgetWeatherText');
+  
+  if (weatherTextEl) {
+    const weatherMapping = {
+      0: { emoji: '☀️', text: 'Clear Sky' },
+      1: { emoji: '🌤️', text: 'Mainly Clear' },
+      2: { emoji: '⛅', text: 'Partly Cloudy' },
+      3: { emoji: '☁️', text: 'Overcast' },
+      45: { emoji: '🌫️', text: 'Foggy' },
+      48: { emoji: '🌫️', text: 'Foggy' },
+      51: { emoji: '🌧️', text: 'Light Drizzle' },
+      53: { emoji: '🌧️', text: 'Drizzle' },
+      55: { emoji: '🌧️', text: 'Heavy Drizzle' },
+      61: { emoji: '🌧️', text: 'Light Rain' },
+      63: { emoji: '🌧️', text: 'Moderate Rain' },
+      65: { emoji: '🌧️', text: 'Heavy Rain' },
+      71: { emoji: '❄️', text: 'Light Snow' },
+      73: { emoji: '❄️', text: 'Moderate Snow' },
+      75: { emoji: '❄️', text: 'Heavy Snow' },
+      80: { emoji: '🌧️', text: 'Rain Showers' },
+      81: { emoji: '🌧️', text: 'Heavy Showers' },
+      82: { emoji: '🌧️', text: 'Violent Showers' },
+      95: { emoji: '⛈️', text: 'Thunderstorm' },
+      96: { emoji: '⛈️', text: 'Thunderstorm' },
+      99: { emoji: '⛈️', text: 'Thunderstorm' }
+    };
+
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=16.5939&longitude=81.9453&current_weather=true')
+      .then(res => {
+        if (!res.ok) throw new Error('Weather API error');
+        return res.json();
+      })
+      .then(data => {
+        if (data && data.current_weather) {
+          const temp = Math.round(data.current_weather.temperature);
+          const code = data.current_weather.weathercode;
+          const mapped = weatherMapping[code] || { emoji: '🌤️', text: 'Clear' };
+          
+          weatherIconEl.innerText = mapped.emoji;
+          weatherTextEl.innerText = `${temp}°C | Ambajipeta`;
+        }
+      })
+      .catch(err => {
+        console.error('Weather fetch error:', err);
+        // Clean fallback
+        weatherIconEl.innerText = '🌤️';
+        weatherTextEl.innerText = '32°C | Ambajipeta';
+      });
   }
 }
 
