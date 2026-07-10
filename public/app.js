@@ -7,6 +7,7 @@ let statsBarChart = null;
 let statsRadarChart = null;
 let statsPieChart = null;
 let statsSupplierChart = null;
+let isMonthInitialized = false;
 
 // Inventory Database
 let inventory = [
@@ -791,12 +792,14 @@ function populateMonthDropdowns() {
   monthSelect.appendChild(optAll);
 
   // Set default selection
-  if (previousValue && options.includes(previousValue)) {
+  if (isMonthInitialized && previousValue && options.includes(previousValue)) {
     monthSelect.value = previousValue;
   } else if (options.includes(currentMonthStr)) {
     monthSelect.value = currentMonthStr;
+    isMonthInitialized = true;
   } else {
     monthSelect.value = options[options.length - 2] || options[options.length - 1];
+    isMonthInitialized = true;
   }
 
   // Populate purchase form Target Inventory Month select dropdown
