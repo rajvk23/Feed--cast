@@ -388,67 +388,58 @@ function renderDashboard() {
   }
 }
 
-// Render Retailers List
+// Render Retailers List showing individual transactions (unsummed) with dates/months
 function renderRetailers() {
   const searchTerm = retailerSearchInput.value.toLowerCase().trim();
+  const selectedMonth = dashboardMonthSelect.value;
   
-  // Include all customer sales, including counter value
-  const retailerSalesOnly = sales.filter(s => s.Customer);
+  // Filter sales based on customer existence
+  let filteredSales = sales.filter(s => s.Customer);
   
-  // Group sales by retailer
-  const customerSummary = {};
-  retailerSalesOnly.forEach(s => {
-    if (!customerSummary[s.Customer]) {
-      customerSummary[s.Customer] = {
-        name: s.Customer,
-        totalBought: 0,
-        visitCount: 0
-      };
-    }
-    customerSummary[s.Customer].totalBought += s.Net_Amount;
-    customerSummary[s.Customer].visitCount += 1;
-  });
-
-  // Convert to array and filter/sort
-  let retailersList = Object.values(customerSummary);
+  // Filter by selected month
+  if (selectedMonth !== 'All Time') {
+    filteredSales = filteredSales.filter(s => s.Month === selectedMonth);
+  }
   
+  // Filter by search query
   if (searchTerm) {
-    retailersList = retailersList.filter(r => r.name.toLowerCase().includes(searchTerm));
+    filteredSales = filteredSales.filter(s => s.Customer.toLowerCase().includes(searchTerm));
   }
 
-  // Sort by total bought descending
-  retailersList.sort((a,b) => b.totalBought - a.totalBought);
+  // Sort chronologically (latest transactions first)
+  filteredSales.sort((a, b) => new Date(b.Date) - new Date(a.Date));
 
   // Update DOM stats
-  document.getElementById('totalRetailerCount').innerText = retailersList.length;
+  document.getElementById('totalRetailerCount').innerText = filteredSales.length;
   
   const topCustomerNameEl = document.getElementById('topCustomerName');
   const topCustomerAmountEl = document.getElementById('topCustomerAmount');
 
-  if (retailersList.length > 0) {
-    topCustomerNameEl.innerText = retailersList[0].name;
-    topCustomerAmountEl.innerText = `${formatRupee(retailersList[0].totalBought)} bought total`;
+  if (filteredSales.length > 0) {
+    topCustomerNameEl.innerText = filteredSales[0].Customer;
+    topCustomerAmountEl.innerText = `${formatRupee(filteredSales[0].Net_Amount)} (Max Sale)`;
   } else {
     topCustomerNameEl.innerText = '-';
-    topCustomerAmountEl.innerText = '₹0 bought total';
+    topCustomerAmountEl.innerText = '₹0 (Max Sale)';
   }
 
-  // Populate Retailers Table
+  // Populate Retailers Table with unsummed transactions
   const retailersBody = document.getElementById('retailersBody');
   retailersBody.innerHTML = '';
 
-  if (retailersList.length === 0) {
-    retailersBody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">No retailers found matching your search.</td></tr>`;
+  if (filteredSales.length === 0) {
+    retailersBody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No transactions found matching search and month selection.</td></tr>`;
   } else {
-    retailersList.forEach((r, index) => {
+    filteredSales.forEach((s, index) => {
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td><span class="rank-badge">${index + 1}</span></td>
-        <td><strong>${r.name}</strong></td>
-        <td class="text-center">${r.visitCount} times</td>
-        <td class="text-right"><strong>${formatRupee(r.totalBought)}</strong></td>
+        <td><span class="rank-badge" style="background-color: var(--primary-light); color: var(--primary-color);">${index + 1}</span></td>
+        <td><strong>${s.Customer}</strong></td>
+        <td class="text-center">${s.Date}</td>
+        <td class="text-center">${s.Month}</td>
+        <td class="text-right"><strong>${formatRupee(s.Net_Amount)}</strong></td>
         <td class="text-right">
-          <button class="btn btn-sm btn-outline" onclick="triggerRetailerSale('${r.name.replace(/'/g, "\\'")}')">Add Sale</button>
+          <button class="btn btn-sm btn-outline" onclick="triggerRetailerSale('${s.Customer.replace(/'/g, "\\'")}')">Add Sale</button>
         </td>
       `;
       retailersBody.appendChild(row);
@@ -481,14 +472,16 @@ function calculatePrediction() {
   let predictedSales = 1663389;
   let predictedPurchases = 1663389;
 
-  // Determine target predicted month dynamically based on calendar clock (current month)
-  const now = new Date();
+  // Determine target predicted month dynamically based on dropdown selection
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
   ];
-  
-  const selectedMonth = `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+  let selectedMonth = dashboardMonthSelect.value;
+  if (!selectedMonth || selectedMonth === 'All Time') {
+    const now = new Date();
+    selectedMonth = `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+  }
   const [monthName, yearStr] = selectedMonth.split(' ');
   const year = parseInt(yearStr);
 
