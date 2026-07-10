@@ -486,8 +486,9 @@ function renderRetailers() {
         <td class="text-center">${s.Date}</td>
         <td class="text-center">${s.Month}</td>
         <td class="text-right"><strong>${formatRupee(s.Net_Amount)}</strong></td>
-        <td class="text-right">
-          <button class="btn btn-sm btn-outline" onclick="triggerRetailerSale('${s.Customer.replace(/'/g, "\\'")}')">Add Sale</button>
+        <td class="text-right" style="white-space: nowrap;">
+          <button class="btn btn-sm btn-outline" style="margin-right: 0.25rem;" onclick="triggerRetailerSale('${s.Customer.replace(/'/g, "\\'")}')">Add Sale</button>
+          <button class="btn btn-sm btn-danger-outline" onclick="deleteSale('${s.Voucher}')" title="Delete Sale">Delete</button>
         </td>
       `;
       retailersBody.appendChild(row);
