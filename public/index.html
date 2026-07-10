@@ -204,9 +204,35 @@
                 <th>Customer</th>
                 <th>Type</th>
                 <th class="text-right">Amount (₹)</th>
+                <th class="text-right">Action</th>
               </tr>
             </thead>
             <tbody id="recentSalesBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Recent Purchases Table -->
+      <div class="card mt-4">
+        <div class="card-header-simple">
+          <h3>Recent Purchases Activity</h3>
+          <button class="btn btn-sm btn-outline nav-trigger" data-tab="add-purchase">New Purchase</button>
+        </div>
+        <div class="table-responsive">
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Voucher</th>
+                <th>Supplier</th>
+                <th>Type</th>
+                <th class="text-right">Amount (₹)</th>
+                <th class="text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="recentPurchasesBody">
               <!-- Dynamically populated -->
             </tbody>
           </table>

@@ -361,7 +361,7 @@ function renderDashboard() {
   const displayCount = Math.min(sortedRecent.length, 7);
 
   if (displayCount === 0) {
-    recentSalesBody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">No sales logged in this period. Click 'Record Sale' above.</td></tr>`;
+    recentSalesBody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No sales logged in this period. Click 'Record Sale' above.</td></tr>`;
   } else {
     for (let i = 0; i < displayCount; i++) {
       const s = sortedRecent[i];
@@ -376,8 +376,41 @@ function renderDashboard() {
         <td><strong>${s.Customer}</strong></td>
         <td><span class="badge-type ${badgeClass}">${customerTypeLabel}</span></td>
         <td class="text-right"><strong>${formatRupee(s.Net_Amount)}</strong></td>
+        <td class="text-right">
+          <button class="btn btn-sm btn-danger-outline" onclick="deleteSale('${s.Voucher}')" title="Delete Sale">Delete</button>
+        </td>
       `;
       recentSalesBody.appendChild(row);
+    }
+  }
+
+  // Populate Recent Purchases Table (limit to 7)
+  const recentPurchasesBody = document.getElementById('recentPurchasesBody');
+  if (recentPurchasesBody) {
+    recentPurchasesBody.innerHTML = '';
+    
+    const sortedRecentPurchases = [...filteredPurchases].sort((a,b) => new Date(b.Date) - new Date(a.Date));
+    const displayPurchasesCount = Math.min(sortedRecentPurchases.length, 7);
+
+    if (displayPurchasesCount === 0) {
+      recentPurchasesBody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No purchases logged in this period. Click 'Record Buy' above.</td></tr>`;
+    } else {
+      for (let i = 0; i < displayPurchasesCount; i++) {
+        const p = sortedRecentPurchases[i];
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+          <td>${p.Date}</td>
+          <td><code>${p.Voucher}</code></td>
+          <td><strong>${p.Supplier}</strong></td>
+          <td><span class="badge-type badge-retailer">${p.Type || 'Within State'}</span></td>
+          <td class="text-right"><strong>${formatRupee(p.Net_Amount)}</strong></td>
+          <td class="text-right">
+            <button class="btn btn-sm btn-danger-outline" onclick="deletePurchase('${p.Voucher}')" title="Delete Purchase">Delete</button>
+          </td>
+        `;
+        recentPurchasesBody.appendChild(row);
+      }
     }
   }
 
@@ -1768,6 +1801,47 @@ function initHeaderWidgets() {
       });
   }
 }
+
+// Global functions for deleting transactions
+window.deleteSale = async function(voucher) {
+  if (!confirm(`Are you sure you want to delete sale transaction ${voucher}?`)) {
+    return;
+  }
+  try {
+    const response = await fetch(`/api/sales/${voucher}`, {
+      method: 'DELETE'
+    });
+    if (!response.ok) {
+      const errData = await response.json();
+      throw new Error(errData.error || 'Failed to delete sale');
+    }
+    showToast(`Sale transaction ${voucher} deleted successfully.`);
+    await fetchData();
+  } catch (err) {
+    console.error(err);
+    showToast(err.message || 'Error deleting sale record.');
+  }
+};
+
+window.deletePurchase = async function(voucher) {
+  if (!confirm(`Are you sure you want to delete purchase transaction ${voucher}?`)) {
+    return;
+  }
+  try {
+    const response = await fetch(`/api/purchases/${voucher}`, {
+      method: 'DELETE'
+    });
+    if (!response.ok) {
+      const errData = await response.json();
+      throw new Error(errData.error || 'Failed to delete purchase');
+    }
+    showToast(`Purchase transaction ${voucher} deleted successfully.`);
+    await fetchData();
+  } catch (err) {
+    console.error(err);
+    showToast(err.message || 'Error deleting purchase record.');
+  }
+};
 
 
 

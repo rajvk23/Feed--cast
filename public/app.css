@@ -640,6 +640,17 @@ tr:nth-child(3) .rank-badge {
   background-color: var(--primary-light);
 }
 
+.btn-danger-outline {
+  background-color: transparent;
+  border: 1px solid #dc3545;
+  color: #dc3545;
+  transition: var(--transition);
+}
+
+.btn-danger-outline:hover {
+  background-color: #fdf2f2;
+}
+
 /* AI Prediction Layout */
 .grid-2col {
   display: grid;

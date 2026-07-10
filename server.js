@@ -222,6 +222,42 @@ app.post('/api/purchases', (req, res) => {
   }
 });
 
+// API: Delete a sale by Voucher code
+app.delete('/api/sales/:voucher', (req, res) => {
+  const { voucher } = req.params;
+  try {
+    const storedSales = JSON.parse(fs.readFileSync(STORED_SALES_PATH, 'utf8'));
+    const index = storedSales.findIndex(s => s.Voucher === voucher);
+    if (index === -1) {
+      return res.status(404).json({ error: 'Sale record not found.' });
+    }
+    storedSales.splice(index, 1);
+    fs.writeFileSync(STORED_SALES_PATH, JSON.stringify(storedSales, null, 2), 'utf8');
+    res.json({ message: 'Sale deleted successfully.' });
+  } catch (err) {
+    console.error('Error deleting sale:', err);
+    res.status(500).json({ error: 'Failed to delete sale on server.' });
+  }
+});
+
+// API: Delete a purchase by Voucher code
+app.delete('/api/purchases/:voucher', (req, res) => {
+  const { voucher } = req.params;
+  try {
+    const storedPurchases = JSON.parse(fs.readFileSync(STORED_PURCHASES_PATH, 'utf8'));
+    const index = storedPurchases.findIndex(p => p.Voucher === voucher);
+    if (index === -1) {
+      return res.status(404).json({ error: 'Purchase record not found.' });
+    }
+    storedPurchases.splice(index, 1);
+    fs.writeFileSync(STORED_PURCHASES_PATH, JSON.stringify(storedPurchases, null, 2), 'utf8');
+    res.json({ message: 'Purchase deleted successfully.' });
+  } catch (err) {
+    console.error('Error deleting purchase:', err);
+    res.status(500).json({ error: 'Failed to delete purchase on server.' });
+  }
+});
+
 // Serve frontend fallback to index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
