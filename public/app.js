@@ -1044,7 +1044,7 @@ async function handleSaleSubmit(e) {
     await fetchData();
 
     // Select the month of the saved transaction in dashboard dropdown so they see it
-    dashboardMonthSelect.value = monthStr;
+    dashboardMonthSelect.value = savedSale.Month;
 
     // Switch to dashboard tab to view
     setTimeout(() => {
@@ -1131,7 +1131,7 @@ async function handlePurchaseSubmit(e) {
     await fetchData();
 
     // Select the month of the saved transaction in dashboard dropdown
-    dashboardMonthSelect.value = monthStr;
+    dashboardMonthSelect.value = savedPur.Month;
 
     // Switch to dashboard tab to view
     setTimeout(() => {
