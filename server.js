@@ -33,10 +33,32 @@ let client = null;
 
 if (MONGODB_URI) {
   MongoClient.connect(MONGODB_URI)
-    .then(conn => {
+    .then(async conn => {
       client = conn;
       db = conn.db();
       console.log('Successfully connected to MongoDB Atlas');
+      
+      // Auto-migrate local transactions to MongoDB on first connection
+      try {
+        const salesCount = await db.collection('sales').countDocuments();
+        if (salesCount === 0 && fs.existsSync(STORED_SALES_PATH)) {
+          const localSales = JSON.parse(fs.readFileSync(STORED_SALES_PATH, 'utf8'));
+          if (localSales.length > 0) {
+            await db.collection('sales').insertMany(localSales);
+            console.log(`Migrated ${localSales.length} sales to MongoDB`);
+          }
+        }
+        const purchasesCount = await db.collection('purchases').countDocuments();
+        if (purchasesCount === 0 && fs.existsSync(STORED_PURCHASES_PATH)) {
+          const localPurchases = JSON.parse(fs.readFileSync(STORED_PURCHASES_PATH, 'utf8'));
+          if (localPurchases.length > 0) {
+            await db.collection('purchases').insertMany(localPurchases);
+            console.log(`Migrated ${localPurchases.length} purchases to MongoDB`);
+          }
+        }
+      } catch (migErr) {
+        console.error('Error migrating local data to MongoDB:', migErr);
+      }
     })
     .catch(err => {
       console.error('Failed to connect to MongoDB Atlas:', err);
