@@ -564,7 +564,7 @@ function calculatePrediction() {
 
   // Update UI values
   const projectedDemand = Math.round(predictedSales);
-  const recommendedOrder = Math.round(predictedPurchases * (1 + bufferRate));
+  const recommendedOrder = Math.round(projectedDemand * (1 + bufferRate));
 
   document.getElementById('predDemand').innerText = formatRupee(projectedDemand);
   document.getElementById('predOrder').innerText = formatRupee(recommendedOrder);
