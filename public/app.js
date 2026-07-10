@@ -778,7 +778,6 @@ function populateMonthDropdowns() {
     monthSelect.value = options[options.length - 1];
   }
 }
-}
 
 // Predict individual customer purchases and render forecast list
 function renderCustomerPredictions() {
