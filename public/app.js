@@ -59,8 +59,8 @@ const supplierListDatalist = document.getElementById('supplierList');
 
 // Initialize App
 window.addEventListener('DOMContentLoaded', () => {
-  // Set default date to today (June 10, 2026 in metadata)
-  const today = new Date('2026-06-10');
+  // Set default date to today dynamically based on calendar clock
+  const today = new Date();
   const yyyy = today.getFullYear();
   const mm = String(today.getMonth() + 1).padStart(2, '0');
   const dd = String(today.getDate()).padStart(2, '0');
@@ -155,6 +155,9 @@ async function fetchData() {
     sales = data.sales || [];
     purchases = data.purchases || [];
 
+    // Populate Dynamic Month Dropdowns
+    populateMonthDropdowns();
+    
     // Populate Datalists
     populateRetailerDatalist();
     populateSupplierDatalist();
@@ -311,19 +314,28 @@ function renderDashboard() {
   
   // Season label
   const seasonLabel = document.getElementById('summarySeason');
-  if (selectedMonth === 'May 2026') {
-    seasonLabel.innerText = 'Summer (Low)';
-    seasonLabel.className = 'summary-item-value badge';
-  } else if (selectedMonth === 'June 2026') {
-    seasonLabel.innerText = 'Kharif (High)';
-    seasonLabel.className = 'summary-item-value badge';
-    seasonLabel.style.backgroundColor = 'var(--primary-light)';
-    seasonLabel.style.color = 'var(--primary-color)';
-  } else {
-    seasonLabel.innerText = 'Combined';
-    seasonLabel.className = 'summary-item-value badge';
-    seasonLabel.style.backgroundColor = '#e2e8f0';
-    seasonLabel.style.color = '#475569';
+  if (seasonLabel) {
+    const matchingTrans = sales.find(s => s.Month === selectedMonth) || purchases.find(p => p.Month === selectedMonth);
+    if (matchingTrans && matchingTrans.Season) {
+      const cleanSeason = matchingTrans.Season.replace(' Demand', '');
+      seasonLabel.innerText = cleanSeason;
+      seasonLabel.className = 'summary-item-value badge';
+      if (cleanSeason.includes('Kharif')) {
+        seasonLabel.style.backgroundColor = 'var(--primary-light)';
+        seasonLabel.style.color = 'var(--primary-color)';
+      } else if (cleanSeason.includes('Rabi')) {
+        seasonLabel.style.backgroundColor = 'var(--accent-light)';
+        seasonLabel.style.color = 'var(--accent-hover)';
+      } else {
+        seasonLabel.style.backgroundColor = '#e8f5e9';
+        seasonLabel.style.color = '#2e7d32';
+      }
+    } else {
+      seasonLabel.innerText = selectedMonth === 'All Time' ? 'Combined' : 'N/A';
+      seasonLabel.className = 'summary-item-value badge';
+      seasonLabel.style.backgroundColor = '#e2e8f0';
+      seasonLabel.style.color = '#475569';
+    }
   }
 
   // Populate Recent Sales Table (limit to 7)
@@ -460,6 +472,7 @@ window.triggerRetailerSale = function(retailerName) {
 };
 
 // Calculate and Render AI Prediction
+// Calculate dynamic RAST model forecasts automatically matching the current calendar month
 function calculatePrediction() {
   let salesGrowthRate = 0.125; // Fallback +12.5%
   let purchasesGrowthRate = 0.10; // Fallback +10%
@@ -468,25 +481,46 @@ function calculatePrediction() {
   let predictedSales = 1663389;
   let predictedPurchases = 1663389;
 
-  // Calculate dynamic growth rates from last year (FY 2025-2026) using RAST
+  // Determine target predicted month dynamically based on calendar clock (current month)
+  const now = new Date();
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  
+  const selectedMonth = `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+  const [monthName, yearStr] = selectedMonth.split(' ');
+  const year = parseInt(yearStr);
+
+  const monthIdx = monthNames.indexOf(monthName);
+  
+  // Determine baseline (previous) month dynamically
+  let prevMonthIdx = monthIdx - 1;
+  let prevYear = year;
+  if (prevMonthIdx < 0) {
+    prevMonthIdx = 11;
+    prevYear = year - 1;
+  }
+  const prevMonthName = monthNames[prevMonthIdx];
+  const prevMonthStr = `${prevMonthName} ${prevYear}`;
+
+  // Update headers and text in the predictions page dynamically
+  const predHeaderEl = document.getElementById('predictionHeader');
+  if (predHeaderEl) {
+    predHeaderEl.innerText = `${selectedMonth} Demand Prediction`;
+  }
+  
+  const fHeaderEl = document.getElementById('forecastHeader');
+  if (fHeaderEl) {
+    fHeaderEl.innerText = `Sales Channels Demand Forecast (${selectedMonth})`;
+  }
+
+  const fDescEl = document.getElementById('forecastDesc');
+  if (fDescEl) {
+    fDescEl.innerText = `Breakdown of predicted exact demand and recorded sales progress for ${selectedMonth}.`;
+  }
+
   if (historicalData) {
-    const selectedMonth = 'June 2026';
-    const [monthName, yearStr] = selectedMonth.split(' ');
-    const year = parseInt(yearStr);
-
-    const monthNames = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ];
-    const monthIdx = monthNames.indexOf(monthName);
-    let prevMonthIdx = monthIdx - 1;
-    let prevYear = year;
-    if (prevMonthIdx < 0) {
-      prevMonthIdx = 11;
-      prevYear = year - 1;
-    }
-    const prevMonthName = monthNames[prevMonthIdx];
-
     const histInput = historicalData.gst_summary.input;
     const histOutput = historicalData.gst_summary.output;
 
@@ -499,21 +533,23 @@ function calculatePrediction() {
     const salesSeasonalIndex = histSales[monthIdx] / avgSales;
     const purchasesSeasonalIndex = histPurchases[monthIdx] / avgPurchases;
 
-    // May baseline comparison (May is index 1: April=0, May=1)
-    const baseMaySales2025 = histSales[1];
-    const baseMayPurchases2025 = histPurchases[1];
+    // Previous month baseline actuals (e.g. June 2026 data in June, or May 2026 baseline if predicting June)
+    const baseSales2026 = sales.filter(s => s.Month === prevMonthStr).reduce((sum, s) => sum + s.Net_Amount, 0);
+    const basePurchases2026 = purchases.filter(p => p.Month === prevMonthStr).reduce((sum, p) => sum + p.Net_Amount, 0);
 
-    const baseMaySales2026 = 1478568;
-    const baseMayPurchases2026 = 1682045;
+    // Baseline actuals for last year (e.g. June 2025)
+    const baseSales2025 = histSales[prevMonthIdx];
+    const basePurchases2025 = histPurchases[prevMonthIdx];
 
-    const salesGrowthTrend = baseMaySales2026 / baseMaySales2025;
-    const purchasesGrowthTrend = baseMayPurchases2026 / baseMayPurchases2025;
+    // Compute YoY growth trend dynamically
+    const salesGrowthTrend = baseSales2025 > 0 && baseSales2026 > 0 ? (baseSales2026 / baseSales2025) : 1.055;
+    const purchasesGrowthTrend = basePurchases2025 > 0 && basePurchases2026 > 0 ? (basePurchases2026 / basePurchases2025) : 1.055;
 
     predictedSales = avgSales * salesSeasonalIndex * salesGrowthTrend;
     predictedPurchases = avgPurchases * purchasesSeasonalIndex * purchasesGrowthTrend;
 
-    salesGrowthRate = (predictedSales - baseMaySales2026) / baseMaySales2026;
-    purchasesGrowthRate = (predictedPurchases - baseMayPurchases2026) / baseMayPurchases2026;
+    salesGrowthRate = baseSales2026 > 0 ? (predictedSales - baseSales2026) / baseSales2026 : 0.125;
+    purchasesGrowthRate = basePurchases2026 > 0 ? (predictedPurchases - basePurchases2026) / basePurchases2026 : 0.10;
 
     // Populate dynamic texts in the formulas
     const sIndexEl = document.getElementById('salesSeasonalIndexText');
@@ -525,17 +561,27 @@ function calculatePrediction() {
       pIndexEl.innerText = `${purchasesSeasonalIndex.toFixed(2)} (${monthName} Index)`;
       trendEl.innerText = `Sales: +${((salesGrowthTrend - 1) * 100).toFixed(1)}% | Purchases: +${((purchasesGrowthTrend - 1) * 100).toFixed(1)}%`;
     }
+
+    // Update baseline analysers description card
+    const baselineMonthTextEl = document.getElementById('baselineMonthText');
+    if (baselineMonthTextEl) {
+      baselineMonthTextEl.innerText = `${prevMonthStr} (Baseline Sales: ${formatRupee(Math.round(baseSales2026))})`;
+    }
   }
 
   // Update UI values
-  const projectedJuneDemand = Math.round(predictedSales);
-  const recommendedJuneOrder = Math.round(predictedPurchases * (1 + bufferRate));
+  const projectedDemand = Math.round(predictedSales);
+  const recommendedOrder = Math.round(predictedPurchases * (1 + bufferRate));
 
-  document.getElementById('predDemand').innerText = formatRupee(projectedJuneDemand);
-  document.getElementById('predOrder').innerText = formatRupee(recommendedJuneOrder);
+  document.getElementById('predDemand').innerText = formatRupee(projectedDemand);
+  document.getElementById('predOrder').innerText = formatRupee(recommendedOrder);
   
-  // Supplier Allocation Logic
-  // May purchases details: Total = 1,682,045
+  const metaNoteEl = document.getElementById('predictionMetaNote');
+  if (metaNoteEl) {
+    metaNoteEl.innerHTML = `This recommendation is calculated to cover your expected sales of <strong>${formatRupee(projectedDemand)}</strong> plus a <strong>10%</strong> safety stock buffer.`;
+  }
+
+  // Dynamic Supplier Recommendations
   const supplierBaselines = [
     { name: 'PST TRADERS', amount: 707130, type: 'Within State' },
     { name: 'SRI AISHWARYA FEED', amount: 368165, type: 'Within State' },
@@ -543,88 +589,196 @@ function calculatePrediction() {
     { name: 'VIJAY NAGAR BIO', amount: 210000, type: 'Within State' },
     { name: 'KAMDHENU FEED', amount: 73900, type: 'Within State' }
   ];
-  const totalMayPurchases = 1682045;
+  const totalSupplierMayPurchases = 1682045;
 
   const supplierRecBody = document.getElementById('supplierRecBody');
-  supplierRecBody.innerHTML = '';
+  if (supplierRecBody) {
+    supplierRecBody.innerHTML = '';
+    supplierBaselines.forEach(sup => {
+      const ratio = sup.amount / totalSupplierMayPurchases;
+      const recommendedAmount = recommendedOrder * ratio;
 
-  supplierBaselines.forEach(sup => {
-    const ratio = sup.amount / totalMayPurchases;
-    const recommendedAmount = recommendedJuneOrder * ratio;
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><strong>${sup.name}</strong></td>
+        <td><span class="badge-type badge-retailer">${sup.type}</span></td>
+        <td class="text-center text-muted">${(ratio * 100).toFixed(1)}%</td>
+        <td class="text-right text-muted">${formatRupee(sup.amount)}</td>
+        <td class="text-right highlight-col"><strong>${formatRupee(recommendedAmount)}</strong></td>
+      `;
+      supplierRecBody.appendChild(row);
+    });
+  }
 
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td><strong>${sup.name}</strong></td>
-      <td><span class="badge-type badge-retailer">${sup.type}</span></td>
-      <td class="text-center text-muted">${(ratio * 100).toFixed(1)}%</td>
-      <td class="text-right text-muted">${formatRupee(sup.amount)}</td>
-      <td class="text-right highlight-col"><strong>${formatRupee(recommendedAmount)}</strong></td>
-    `;
-    supplierRecBody.appendChild(row);
-  });
+  // Sales Channels Forecast progress calculations
+  const prevMonthStr = `${prevMonthName} ${prevYear}`;
+  const prevMonthSales = sales.filter(s => s.Month === prevMonthStr);
+  const prevCounterBaseline = prevMonthSales.filter(s => s.Customer === 'COUNTER SALES').reduce((sum, s) => sum + s.Net_Amount, 0) || 858762;
+  const prevRetailerBaseline = prevMonthSales.filter(s => s.Customer !== 'COUNTER SALES').reduce((sum, s) => sum + s.Net_Amount, 0) || 619806;
 
-  // Sales Channels Demand Forecast
-  const mayCounterBaseline = 858762;
-  const mayRetailerBaseline = baseMaySales - mayCounterBaseline;
+  const counterPredVal = prevCounterBaseline * (1 + salesGrowthRate);
+  const retailerPredVal = prevRetailerBaseline * (1 + salesGrowthRate);
 
-  const juneCounterPred = mayCounterBaseline * (1 + salesGrowthRate);
-  const juneRetailerPred = mayRetailerBaseline * (1 + salesGrowthRate);
+  // Calculate actual recorded sales for current target month
+  const currentMonthSales = sales.filter(s => s.Month === selectedMonth);
+  const currentCounterRecorded = currentMonthSales.filter(s => s.Customer === 'COUNTER SALES').reduce((sum, s) => sum + s.Net_Amount, 0);
+  const currentRetailerRecorded = currentMonthSales.filter(s => s.Customer !== 'COUNTER SALES').reduce((sum, s) => sum + s.Net_Amount, 0);
 
-  // Calculate recorded sales for June 2026
-  const juneSales = sales.filter(s => s.Month === 'June 2026');
+  // Update dynamic month labels on channel metrics
+  document.getElementById('counterBaselineLabel').innerText = `${prevMonthName} Baseline`;
+  document.getElementById('counterPredLabel').innerText = `${monthName} Exact Prediction`;
+  document.getElementById('counterRecordedLabel').innerText = `${monthName} Recorded`;
 
-  const juneCounterRecorded = juneSales
-    .filter(s => s.Customer === 'COUNTER SALES')
-    .reduce((sum, s) => sum + s.Net_Amount, 0);
-
-  const juneRetailerRecorded = juneSales
-    .filter(s => s.Customer !== 'COUNTER SALES')
-    .reduce((sum, s) => sum + s.Net_Amount, 0);
+  document.getElementById('retailerBaselineLabel').innerText = `${prevMonthName} Baseline`;
+  document.getElementById('retailerPredLabel').innerText = `${monthName} Exact Prediction`;
+  document.getElementById('retailerRecordedLabel').innerText = `${monthName} Recorded`;
 
   // Update DOM elements for channel baselines and predictions
-  document.getElementById('counterMayBaseline').innerText = formatRupee(mayCounterBaseline);
-  document.getElementById('counterJunePred').innerText = formatRupee(juneCounterPred);
-  document.getElementById('counterJuneRecorded').innerText = formatRupee(juneCounterRecorded);
+  document.getElementById('counterMayBaseline').innerText = formatRupee(prevCounterBaseline);
+  document.getElementById('counterJunePred').innerText = formatRupee(counterPredVal);
+  document.getElementById('counterJuneRecorded').innerText = formatRupee(currentCounterRecorded);
 
-  document.getElementById('retailerMayBaseline').innerText = formatRupee(mayRetailerBaseline);
-  document.getElementById('retailerJunePred').innerText = formatRupee(juneRetailerPred);
-  document.getElementById('retailerJuneRecorded').innerText = formatRupee(juneRetailerRecorded);
+  document.getElementById('retailerMayBaseline').innerText = formatRupee(prevRetailerBaseline);
+  document.getElementById('retailerJunePred').innerText = formatRupee(retailerPredVal);
+  document.getElementById('retailerJuneRecorded').innerText = formatRupee(currentRetailerRecorded);
 
   // Progress Bar widths & text
-  const counterPct = Math.min(100, Math.round((juneCounterRecorded / juneCounterPred) * 100)) || 0;
-  const retailerPct = Math.min(100, Math.round((juneRetailerRecorded / juneRetailerPred) * 100)) || 0;
+  const counterPct = Math.min(100, Math.round((currentCounterRecorded / counterPredVal) * 100)) || 0;
+  const retailerPct = Math.min(100, Math.round((currentRetailerRecorded / retailerPredVal) * 100)) || 0;
 
   document.getElementById('counterProgressPercent').innerText = `${counterPct}%`;
-  document.getElementById('counterProgressAmt').innerText = `${formatRupee(juneCounterRecorded)} of ${formatRupee(juneCounterPred)}`;
+  document.getElementById('counterProgressAmt').innerText = `${formatRupee(currentCounterRecorded)} of ${formatRupee(counterPredVal)}`;
   document.getElementById('counterProgressBar').style.width = `${counterPct}%`;
 
   document.getElementById('retailerProgressPercent').innerText = `${retailerPct}%`;
-  document.getElementById('retailerProgressAmt').innerText = `${formatRupee(juneRetailerRecorded)} of ${formatRupee(juneRetailerPred)}`;
+  document.getElementById('retailerProgressAmt').innerText = `${formatRupee(currentRetailerRecorded)} of ${formatRupee(retailerPredVal)}`;
   document.getElementById('retailerProgressBar').style.width = `${retailerPct}%`;
 
-  // Daily run rate needed (current day = June 10, so 20 days remaining)
-  const currentDay = 10;
-  const daysRemaining = 30 - currentDay;
+  // Daily run rate needed
+  const currentDayNum = now.getDate();
+  const totalDaysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+  const daysRemainingVal = Math.max(1, totalDaysInMonth - currentDayNum);
 
-  const counterRemaining = juneCounterPred - juneCounterRecorded;
+  const counterRemaining = counterPredVal - currentCounterRecorded;
   const counterPaceEl = document.getElementById('counterPace');
-  if (counterRemaining <= 0) {
-    counterPaceEl.innerText = 'Target Achieved!';
-    counterPaceEl.style.color = 'var(--success-color)';
-  } else {
-    counterPaceEl.innerText = `Pace: ${formatRupee(Math.round(counterRemaining / daysRemaining))}/day needed`;
-    counterPaceEl.style.color = 'var(--text-muted)';
+  if (counterPaceEl) {
+    if (counterRemaining <= 0) {
+      counterPaceEl.innerText = 'Target Achieved!';
+      counterPaceEl.style.color = 'var(--success-color)';
+    } else {
+      counterPaceEl.innerText = `Pace: ${formatRupee(Math.round(counterRemaining / daysRemainingVal))}/day needed`;
+      counterPaceEl.style.color = 'var(--text-muted)';
+    }
   }
 
-  const retailerRemaining = juneRetailerPred - juneRetailerRecorded;
+  const retailerRemaining = retailerPredVal - currentRetailerRecorded;
   const retailerPaceEl = document.getElementById('retailerPace');
-  if (retailerRemaining <= 0) {
-    retailerPaceEl.innerText = 'Target Achieved!';
-    retailerPaceEl.style.color = 'var(--success-color)';
-  } else {
-    retailerPaceEl.innerText = `Pace: ${formatRupee(Math.round(retailerRemaining / daysRemaining))}/day needed`;
-    retailerPaceEl.style.color = 'var(--text-muted)';
+  if (retailerPaceEl) {
+    if (retailerRemaining <= 0) {
+      retailerPaceEl.innerText = 'Target Achieved!';
+      retailerPaceEl.style.color = 'var(--success-color)';
+    } else {
+      retailerPaceEl.innerText = `Pace: ${formatRupee(Math.round(retailerRemaining / daysRemainingVal))}/day needed`;
+      retailerPaceEl.style.color = 'var(--text-muted)';
+    }
   }
+}
+
+// Dynamically populate month options in select dropdowns based on calendar progress
+function populateMonthDropdowns() {
+  const monthSelect = document.getElementById('dashboardMonth');
+  if (!monthSelect) return;
+
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  // We start at May 2026
+  const startMonthIdx = 4; // May
+  const startYear = 2026;
+
+  // We go up to the current system date's month and year
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonthIdx = now.getMonth();
+
+  // Find all unique months present in sales and purchases to make sure we don't miss anything
+  const transactionMonths = new Set();
+  sales.forEach(s => { if (s.Month) transactionMonths.add(s.Month); });
+  purchases.forEach(p => { if (p.Month) transactionMonths.add(p.Month); });
+
+  // Generate sequence of months from May 2026 to current calendar month
+  const options = [];
+  let y = startYear;
+  let m = startMonthIdx;
+
+  while (y < currentYear || (y === currentYear && m <= currentMonthIdx)) {
+    const monthStr = `${monthNames[m]} ${y}`;
+    options.push(monthStr);
+    
+    m++;
+    if (m > 11) {
+      m = 0;
+      y++;
+    }
+  }
+
+  // Also add any other months that exist in the transactions but are outside the range
+  transactionMonths.forEach(mStr => {
+    if (!options.includes(mStr)) {
+      options.push(mStr);
+    }
+  });
+
+  // Sort options chronologically (May 2026, June 2026, July 2026, etc.)
+  options.sort((a, b) => {
+    const [ma, ya] = a.split(' ');
+    const [mb, yb] = b.split(' ');
+    const ia = monthNames.indexOf(ma) + parseInt(ya) * 12;
+    const ib = monthNames.indexOf(mb) + parseInt(yb) * 12;
+    return ia - ib;
+  });
+
+  // Save the currently selected value if any
+  const previousValue = monthSelect.value;
+
+  // Clear existing options
+  monthSelect.innerHTML = '';
+
+  const currentMonthStr = `${monthNames[currentMonthIdx]} ${currentYear}`;
+  
+  options.forEach(mStr => {
+    const opt = document.createElement('option');
+    opt.value = mStr;
+    
+    // Label
+    if (mStr === 'May 2026') {
+      opt.innerText = `${mStr} (Baseline)`;
+    } else if (mStr === currentMonthStr) {
+      opt.innerText = `${mStr} (Current Month)`;
+    } else {
+      opt.innerText = mStr;
+    }
+    
+    monthSelect.appendChild(opt);
+  });
+
+  // Add All Time option
+  const optAll = document.createElement('option');
+  optAll.value = 'All Time';
+  optAll.innerText = 'All Time Summary';
+  monthSelect.appendChild(optAll);
+
+  // Set default selection
+  if (previousValue && options.includes(previousValue)) {
+    monthSelect.value = previousValue;
+  } else if (options.includes(currentMonthStr)) {
+    monthSelect.value = currentMonthStr;
+  } else {
+    monthSelect.value = options[options.length - 1];
+  }
+}
 }
 
 // Predict individual customer purchases and render forecast list
@@ -810,8 +964,8 @@ async function handleSaleSubmit(e) {
     // Refresh Data
     await fetchData();
 
-    // Select June 2026 in dashboard dropdown so they see it
-    dashboardMonthSelect.value = 'June 2026';
+    // Select the month of the saved transaction in dashboard dropdown so they see it
+    dashboardMonthSelect.value = monthStr;
 
     // Switch to dashboard tab to view
     setTimeout(() => {
@@ -894,8 +1048,8 @@ async function handlePurchaseSubmit(e) {
     // Refresh Data
     await fetchData();
 
-    // Select June 2026 in dashboard dropdown
-    dashboardMonthSelect.value = 'June 2026';
+    // Select the month of the saved transaction in dashboard dropdown
+    dashboardMonthSelect.value = monthStr;
 
     // Switch to dashboard tab to view
     setTimeout(() => {

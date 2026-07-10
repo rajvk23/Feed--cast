@@ -330,7 +330,7 @@
               <div class="feature-bullet">✓</div>
               <div>
                 <strong>Baseline Month Analysed</strong>
-                <p class="text-sm text-muted">May 2026 (Baseline Sales: ₹14,78,568)</p>
+                <p class="text-sm text-muted" id="baselineMonthText">May 2026 (Baseline Sales: ₹14,78,568)</p>
               </div>
             </div>
             <div class="engine-feature-item mt-3">
@@ -377,14 +377,14 @@
             </div>
           </div>
 
-          <p class="meta-note mt-3">This recommendation is calculated to cover your expected sales of <strong>₹16.63 Lakhs</strong> plus a <strong>10%</strong> safety stock buffer.</p>
+          <p class="meta-note mt-3" id="predictionMetaNote">This recommendation is calculated to cover your expected sales of <strong>₹16.63 Lakhs</strong> plus a <strong>10%</strong> safety stock buffer.</p>
         </div>
       </div>
 
       <!-- Sales Channels Forecast Section -->
       <div class="card mt-4">
-        <h3 class="card-title-border">Sales Channels Demand Forecast (June 2026)</h3>
-        <p class="description-text mb-3">Breakdown of predicted exact demand and recorded sales progress for June 2026.</p>
+        <h3 class="card-title-border" id="forecastHeader">Sales Channels Demand Forecast (June 2026)</h3>
+        <p class="description-text mb-3" id="forecastDesc">Breakdown of predicted exact demand and recorded sales progress for June 2026.</p>
         
         <div class="channel-forecast-grid">
           <!-- Counter Sales Forecast Card -->
@@ -395,15 +395,15 @@
             </div>
             <div class="channel-metrics">
               <div class="c-metric">
-                <span class="c-label">May Baseline</span>
+                <span class="c-label" id="counterBaselineLabel">May Baseline</span>
                 <span class="c-value" id="counterMayBaseline">₹8,58,762</span>
               </div>
               <div class="c-metric highlight-green">
-                <span class="c-label">June Exact Prediction</span>
+                <span class="c-label" id="counterPredLabel">June Exact Prediction</span>
                 <span class="c-value" id="counterJunePred">₹9,66,107</span>
               </div>
               <div class="c-metric">
-                <span class="c-label">June Recorded</span>
+                <span class="c-label" id="counterRecordedLabel">June Recorded</span>
                 <span class="c-value" id="counterJuneRecorded">₹0</span>
               </div>
             </div>
@@ -426,15 +426,15 @@
             </div>
             <div class="channel-metrics">
               <div class="c-metric">
-                <span class="c-label">May Baseline</span>
+                <span class="c-label" id="retailerBaselineLabel">May Baseline</span>
                 <span class="c-value" id="retailerMayBaseline">₹6,19,806</span>
               </div>
               <div class="c-metric highlight-green">
-                <span class="c-label">June Exact Prediction</span>
+                <span class="c-label" id="retailerPredLabel">June Exact Prediction</span>
                 <span class="c-value" id="retailerJunePred">₹6,97,282</span>
               </div>
               <div class="c-metric">
-                <span class="c-label">June Recorded</span>
+                <span class="c-label" id="retailerRecordedLabel">June Recorded</span>
                 <span class="c-value" id="retailerJuneRecorded">₹0</span>
               </div>
             </div>
