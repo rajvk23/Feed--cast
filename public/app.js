@@ -611,7 +611,6 @@ function calculatePrediction() {
   }
 
   // Sales Channels Forecast progress calculations
-  const prevMonthStr = `${prevMonthName} ${prevYear}`;
   const prevMonthSales = sales.filter(s => s.Month === prevMonthStr);
   const prevCounterBaseline = prevMonthSales.filter(s => s.Customer === 'COUNTER SALES').reduce((sum, s) => sum + s.Net_Amount, 0) || 858762;
   const prevRetailerBaseline = prevMonthSales.filter(s => s.Customer !== 'COUNTER SALES').reduce((sum, s) => sum + s.Net_Amount, 0) || 619806;
