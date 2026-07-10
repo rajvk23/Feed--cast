@@ -969,7 +969,7 @@ function renderCustomerPredictions() {
   // Render forecast table
   forecastBody.innerHTML = '';
   if (forecastDataList.length === 0) {
-    forecastBody.innerHTML = `<tr><td colspan="7" class="text-center text-muted">No matching retailer forecasts.</td></tr>`;
+    forecastBody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No matching retailer forecasts.</td></tr>`;
   } else {
     forecastDataList.forEach(item => {
       const row = document.createElement('tr');
@@ -977,7 +977,6 @@ function renderCustomerPredictions() {
         <td><strong>${item.name}</strong></td>
         <td class="text-center">Every ${item.avgInterval} days</td>
         <td class="text-center">${item.lastDate}</td>
-        <td class="text-center"><strong>${item.nextDate}</strong></td>
         <td class="text-right"><strong>${formatRupee(item.nextAmount)}</strong></td>
         <td class="text-center"><span class="badge-status ${item.statusClass}">${item.status}</span></td>
         <td class="text-right">
