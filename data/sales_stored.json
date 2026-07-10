@@ -1,1 +1,596 @@
-[]
+[
+  {
+    "Customer": "COUNTER SALES",
+    "Date": "2026-06-01",
+    "Voucher": "COMBINED_COUNTER_JUN",
+    "Net_Amount": 708000.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Counter/Walk-in"
+  },
+  {
+    "Customer": "SRI VENKATA KALAYANI GADDENA PALLI KOTLA",
+    "Date": "2026-06-02",
+    "Voucher": "GS450",
+    "Net_Amount": 7900.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "JALLURI SURI BABU",
+    "Date": "2026-06-02",
+    "Voucher": "GS452",
+    "Net_Amount": 10400.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Chituru krishna murthy, tondavaram",
+    "Date": "2026-06-02",
+    "Voucher": "GS465",
+    "Net_Amount": 5300.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Konndala rao mill gannavaram",
+    "Date": "2026-06-02",
+    "Voucher": "GS469",
+    "Net_Amount": 12000.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "SRI VENKESWARA KIRANA, SAKURU",
+    "Date": "2026-06-02",
+    "Voucher": "GS482",
+    "Net_Amount": 7600.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Gokavarapu v subharmanayam, pullitkuru",
+    "Date": "2026-06-03",
+    "Voucher": "GS480",
+    "Net_Amount": 5400.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Konndala rao mill gannavaram",
+    "Date": "2026-06-03",
+    "Voucher": "GS494",
+    "Net_Amount": 11300.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "GELLI RAJU, TONDAVARAM",
+    "Date": "2026-06-04",
+    "Voucher": "GS449",
+    "Net_Amount": 1100.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Jalis kirana",
+    "Date": "2026-06-04",
+    "Voucher": "GS453",
+    "Net_Amount": 7000.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Lakshmi general stores, nadampudi",
+    "Date": "2026-06-04",
+    "Voucher": "GS456",
+    "Net_Amount": 6500.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "SAI, KOTAPETA",
+    "Date": "2026-06-04",
+    "Voucher": "GS473",
+    "Net_Amount": 6100.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "G venanana",
+    "Date": "2026-06-04",
+    "Voucher": "GS495",
+    "Net_Amount": 3600.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Sri vijaya krishna ganesh kirana",
+    "Date": "2026-06-05",
+    "Voucher": "GS454",
+    "Net_Amount": 14800.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Lakkiam setti baskar rao, pullet kuru",
+    "Date": "2026-06-05",
+    "Voucher": "GS474",
+    "Net_Amount": 3800.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "YEGGIRAJU, MACHAVARAM",
+    "Date": "2026-06-06",
+    "Voucher": "GS464",
+    "Net_Amount": 15500.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Siva sai rice traders, katerunukona",
+    "Date": "2026-06-06",
+    "Voucher": "GS487",
+    "Net_Amount": 12800.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Boddu pandu ranga rao, munganda",
+    "Date": "2026-06-06",
+    "Voucher": "GS502",
+    "Net_Amount": 5100.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "KOTLA YEGGIRAJU, MACHAVARAM",
+    "Date": "2026-06-07",
+    "Voucher": "GS486",
+    "Net_Amount": 3400.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "JALLURI SURI BABU",
+    "Date": "2026-06-08",
+    "Voucher": "GS458",
+    "Net_Amount": 4800.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "G venanana",
+    "Date": "2026-06-08",
+    "Voucher": "GS467",
+    "Net_Amount": 13000.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "KATTA GOPALKRISHNA",
+    "Date": "2026-06-08",
+    "Voucher": "GS498",
+    "Net_Amount": 7300.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "G MURALI KRISHNA",
+    "Date": "2026-06-10",
+    "Voucher": "GS460",
+    "Net_Amount": 7000.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "BODDU GANESH, MUNGANDA",
+    "Date": "2026-06-10",
+    "Voucher": "GS471",
+    "Net_Amount": 12600.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "SHIVANJANEYA RICE TRADERS",
+    "Date": "2026-06-11",
+    "Voucher": "GS478",
+    "Net_Amount": 12700.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Sri vijaya krishna ganesh kirana",
+    "Date": "2026-06-11",
+    "Voucher": "GS497",
+    "Net_Amount": 14900.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "VENKANNABABU KIRANA, MUNGANDA",
+    "Date": "2026-06-12",
+    "Voucher": "GS442",
+    "Net_Amount": 3200.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Lakkiam setti baskar rao, pullet kuru",
+    "Date": "2026-06-13",
+    "Voucher": "GS484",
+    "Net_Amount": 7800.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Sri vijaya krishna ganesh kirana",
+    "Date": "2026-06-13",
+    "Voucher": "GS488",
+    "Net_Amount": 13600.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Naryanarao, Gannavaram",
+    "Date": "2026-06-14",
+    "Voucher": "GS483",
+    "Net_Amount": 1100.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "AKKULA RAMBABU",
+    "Date": "2026-06-15",
+    "Voucher": "GS448",
+    "Net_Amount": 15200.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Lakshmi general stores, nadampudi",
+    "Date": "2026-06-15",
+    "Voucher": "GS459",
+    "Net_Amount": 8300.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Appana suresh",
+    "Date": "2026-06-15",
+    "Voucher": "GS463",
+    "Net_Amount": 13800.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "SAI, KOTAPETA",
+    "Date": "2026-06-15",
+    "Voucher": "GS475",
+    "Net_Amount": 8700.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Lakshmi kirana, sakuru",
+    "Date": "2026-06-15",
+    "Voucher": "GS477",
+    "Net_Amount": 3800.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Siva sai rice traders, katerunukona",
+    "Date": "2026-06-15",
+    "Voucher": "GS493",
+    "Net_Amount": 3000.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "SAI, KOTAPETA",
+    "Date": "2026-06-16",
+    "Voucher": "GS457",
+    "Net_Amount": 5900.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Sri vijaya krishna ganesh kirana",
+    "Date": "2026-06-16",
+    "Voucher": "GS468",
+    "Net_Amount": 7400.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "JALLURI SURI BABU",
+    "Date": "2026-06-17",
+    "Voucher": "GS440",
+    "Net_Amount": 1900.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "SRI LAKSHMI SRINIVASA PULETIKURU",
+    "Date": "2026-06-17",
+    "Voucher": "GS451",
+    "Net_Amount": 8700.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Konndala rao mill, gannavaram",
+    "Date": "2026-06-17",
+    "Voucher": "GS472",
+    "Net_Amount": 1100.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "AKKULA RAMBABU",
+    "Date": "2026-06-17",
+    "Voucher": "GS492",
+    "Net_Amount": 7400.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Gamini srinivasarao",
+    "Date": "2026-06-17",
+    "Voucher": "GS501",
+    "Net_Amount": 4300.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Konndala rao mill gannavaram",
+    "Date": "2026-06-18",
+    "Voucher": "GS443",
+    "Net_Amount": 8900.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Jalis kirana",
+    "Date": "2026-06-18",
+    "Voucher": "GS444",
+    "Net_Amount": 11300.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Boddu pandu ranga rao, munganda",
+    "Date": "2026-06-18",
+    "Voucher": "GS466",
+    "Net_Amount": 12400.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "SURYA MANIKANTA GENERAL STORES",
+    "Date": "2026-06-18",
+    "Voucher": "GS503",
+    "Net_Amount": 9600.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Ramkrishna raju",
+    "Date": "2026-06-19",
+    "Voucher": "GS461",
+    "Net_Amount": 16000.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Boddu pandu ranga rao, munganda",
+    "Date": "2026-06-20",
+    "Voucher": "GS476",
+    "Net_Amount": 14700.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "G MURALI KRISHNA",
+    "Date": "2026-06-21",
+    "Voucher": "GS489",
+    "Net_Amount": 9100.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "LAKSHMI SAI RICE & GENERAL STORES",
+    "Date": "2026-06-21",
+    "Voucher": "GS490",
+    "Net_Amount": 10000.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "JAMMI RICE SHOP, AMBAJIPETA",
+    "Date": "2026-06-21",
+    "Voucher": "GS504",
+    "Net_Amount": -30800.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Gamini srinivasarao",
+    "Date": "2026-06-22",
+    "Voucher": "GS485",
+    "Net_Amount": 5400.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "VENKANNABABU KIRANA, MUNGANDA",
+    "Date": "2026-06-22",
+    "Voucher": "GS499",
+    "Net_Amount": 13000.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "G venanana",
+    "Date": "2026-06-23",
+    "Voucher": "GS470",
+    "Net_Amount": 5900.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Jalis kirana",
+    "Date": "2026-06-23",
+    "Voucher": "GS479",
+    "Net_Amount": 9800.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Vechha satayanaraya murthy, pulletikuru",
+    "Date": "2026-06-24",
+    "Voucher": "GS462",
+    "Net_Amount": 8000.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "AKKULA RAMBABU",
+    "Date": "2026-06-24",
+    "Voucher": "GS481",
+    "Net_Amount": 9400.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "GELLI RAJU, TONDAVARAM",
+    "Date": "2026-06-25",
+    "Voucher": "GS496",
+    "Net_Amount": 15900.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "SAI RAGVENDHRA",
+    "Date": "2026-06-26",
+    "Voucher": "GS455",
+    "Net_Amount": 10400.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Appana suresh",
+    "Date": "2026-06-27",
+    "Voucher": "GS500",
+    "Net_Amount": 2700.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Vechha satayanaraya murthy, pulletikuru",
+    "Date": "2026-06-28",
+    "Voucher": "GS446",
+    "Net_Amount": 5700.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Boddu pandu ranga rao, munganda",
+    "Date": "2026-06-29",
+    "Voucher": "GS447",
+    "Net_Amount": 11300.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Mahalakshmi kirana, munganda",
+    "Date": "2026-06-29",
+    "Voucher": "GS491",
+    "Net_Amount": 7700.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Gokavarapu v subharmanayam, pullitkuru",
+    "Date": "2026-06-30",
+    "Voucher": "GS441",
+    "Net_Amount": 8500.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  },
+  {
+    "Customer": "Sri vijaya krishna ganesh kirana",
+    "Date": "2026-06-30",
+    "Voucher": "GS445",
+    "Net_Amount": 10800.0,
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)",
+    "Customer_Type": "Retailer/Wholesaler"
+  }
+]

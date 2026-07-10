@@ -1,1 +1,62 @@
-[]
+[
+  {
+    "Supplier": "PST TRADERS",
+    "Date": "2026-06-05",
+    "Voucher": "GP12",
+    "Invoice": "58",
+    "Net_Amount": 750000.0,
+    "Type": "Within State",
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)"
+  },
+  {
+    "Supplier": "SRI AISHWARYA FEED",
+    "Date": "2026-06-11",
+    "Voucher": "GP13",
+    "Invoice": "BOS-26-89",
+    "Net_Amount": 390000.0,
+    "Type": "Within State",
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)"
+  },
+  {
+    "Supplier": "DHARWAL FOOD",
+    "Date": "2026-06-15",
+    "Voucher": "GP14",
+    "Invoice": "B0010042",
+    "Net_Amount": 420000.0,
+    "Type": "Out of State",
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)"
+  },
+  {
+    "Supplier": "VIJAY NAGAR BIO",
+    "Date": "2026-06-20",
+    "Voucher": "GP15",
+    "Invoice": "VBL/GST-12",
+    "Net_Amount": 220000.0,
+    "Type": "Within State",
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)"
+  },
+  {
+    "Supplier": "KAMDHENU FEED",
+    "Date": "2026-06-25",
+    "Voucher": "GP16",
+    "Invoice": "812",
+    "Net_Amount": 85000.0,
+    "Type": "Within State",
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)"
+  },
+  {
+    "Supplier": "DHARWAL FOOD",
+    "Date": "2026-06-29",
+    "Voucher": "GP17",
+    "Invoice": "T0010022",
+    "Net_Amount": 19130.0,
+    "Type": "Out of State",
+    "Month": "June 2026",
+    "Season": "Kharif (High Demand)"
+  }
+]
